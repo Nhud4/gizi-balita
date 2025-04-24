@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 
 export const generateToken = (userId: string, name: string) => {
@@ -32,11 +32,12 @@ export const verifyToken = (
   }
 };
 
-export const basicAuth = (req: Request, res: Response, next: NextFunction) => {
+export const basicAuth: RequestHandler = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Basic ")) {
-    return res.status(401).send("Authentication required.");
+    res.status(401).send("Authentication required.");
+    return;
   }
 
   const base64Credentials = authHeader.split(" ")[1];
@@ -46,11 +47,12 @@ export const basicAuth = (req: Request, res: Response, next: NextFunction) => {
   const [reqUser, reqPass] = credentials.split(":");
 
   if (
-    reqUser === process.env.BASIC_USER &&
-    reqPass === process.env.BASIC_PASS
+    reqUser !== process.env.BASIC_USER &&
+    reqPass !== process.env.BASIC_PASS
   ) {
-    return next();
+    res.status(401).send("Access denied.");
+    return;
   }
 
-  return res.status(401).send("Access denied.");
+  next();
 };

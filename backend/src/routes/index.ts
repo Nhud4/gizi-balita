@@ -2,8 +2,11 @@ import express from "express";
 import Wrapper from "../helpers/wrapper";
 import { NotFoundError } from "../helpers/error";
 import Logger from "../helpers/logger";
+import auth from "../models/auth/routes";
 
 const router = express.Router();
+
+router.use("/api", auth);
 
 router.get("/", (req, res, next) => {
   Wrapper.response(res, 200, {
