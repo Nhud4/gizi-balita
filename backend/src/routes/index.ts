@@ -3,10 +3,12 @@ import Wrapper from "../helpers/wrapper";
 import { NotFoundError } from "../helpers/error";
 import Logger from "../helpers/logger";
 import auth from "../models/auth/routes";
+import data from "../models/data/routes";
 
 const router = express.Router();
 
 router.use("/api", auth);
+router.use("/api", data);
 
 router.get("/", (req, res, next) => {
   Wrapper.response(res, 200, {
