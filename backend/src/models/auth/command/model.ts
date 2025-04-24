@@ -12,6 +12,15 @@ const createUserSchema = (req: Request, res: Response, next: NextFunction) => {
   validateSchema(schema, { ...req.body }, req, res, next);
 };
 
+const loginSchema = (req: Request, res: Response, next: NextFunction) => {
+  const schema = Joi.object({
+    username: Joi.string().required(),
+    password: Joi.string().required(),
+  });
+  validateSchema(schema, { ...req.body }, req, res, next);
+};
+
 export default {
   createUserSchema,
+  loginSchema,
 };

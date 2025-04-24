@@ -4,3 +4,10 @@ type DataResponse<T> = {
   message: string;
   data: T | null;
 };
+
+type TokenResponse = {
+  userId: number;
+  name: string;
+  iat: number;
+  exp: number;
+};
