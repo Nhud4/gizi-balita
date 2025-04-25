@@ -2,6 +2,7 @@ import express from "express";
 import { verifyToken } from "../../middlewares/auth";
 import multer from "multer";
 import commandHandler from "./command/handler";
+import commandModel from "./command/model";
 import queryHandler from "./query/handler";
 import queryModel from "./query/model";
 
@@ -14,6 +15,12 @@ router.post(
   verifyToken,
   upload.single("file"),
   commandHandler.uploadData
+);
+router.post(
+  "/data/create",
+  verifyToken,
+  commandModel.createSchema,
+  commandHandler.create
 );
 router.get("/data/list", verifyToken, queryModel.listSchema, queryHandler.list);
 router.get(

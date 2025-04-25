@@ -19,6 +19,21 @@ const uploadData = async (req: Request, res: Response) => {
   });
 };
 
+const create = async (req: Request, res: Response) => {
+  const { data, err } = await domain.create(req.validate);
+  if (err) {
+    return wrapper.responseError(res, err as HttpError);
+  }
+
+  return wrapper.response(res, 201, {
+    ...baseResponse,
+    code: 201,
+    message: "Data created successfully",
+    data,
+  });
+};
+
 export default {
   uploadData,
+  create,
 };
