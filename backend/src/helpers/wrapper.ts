@@ -21,9 +21,10 @@ class Wrapper {
 
   data<T = any>(
     data: T,
+    meta: Meta | null = null,
     message: string | null = null
-  ): { err: string | null; data: T } {
-    return { err: message, data };
+  ): { err: string | null; data: T; meta: Meta | null } {
+    return { err: message, data, meta };
   }
 
   error<T = any>(

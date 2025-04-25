@@ -11,3 +11,10 @@ type TokenResponse = {
   iat: number;
   exp: number;
 };
+
+type Meta = {
+  page: number;
+  totalPage: number;
+  totalData: number;
+  totalDataOnPage: number;
+};

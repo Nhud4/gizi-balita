@@ -8,3 +8,11 @@ type UploadDataPayload = {
   status: string;
   created_at: Date;
 };
+
+type ListParams = {
+  page: number;
+  size: number;
+  search?: string;
+  gizi?: string;
+  gender?: string;
+};
