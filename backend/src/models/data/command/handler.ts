@@ -33,7 +33,37 @@ const create = async (req: Request, res: Response) => {
   });
 };
 
+const update = async (req: Request, res: Response) => {
+  const { data, err } = await domain.update(req.validate);
+  if (err) {
+    return wrapper.responseError(res, err as HttpError);
+  }
+
+  return wrapper.response(res, 201, {
+    ...baseResponse,
+    code: 201,
+    message: "Data created successfully",
+    data,
+  });
+};
+
+const remove = async (req: Request, res: Response) => {
+  const { data, err } = await domain.delete(req.validate);
+  if (err) {
+    return wrapper.responseError(res, err as HttpError);
+  }
+
+  return wrapper.response(res, 201, {
+    ...baseResponse,
+    code: 201,
+    message: "Data created successfully",
+    data,
+  });
+};
+
 export default {
   uploadData,
   create,
+  update,
+  remove,
 };

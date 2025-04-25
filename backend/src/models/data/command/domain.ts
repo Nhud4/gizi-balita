@@ -6,6 +6,7 @@ import wrapper from "../../../helpers/wrapper";
 import {
   UnprocessableEntityError,
   InternalServerError,
+  NotFoundError,
 } from "../../../helpers/error";
 import {
   smoteToddlers,
@@ -72,6 +73,13 @@ class CommandDomain {
 
     // get total data
     const { data: total, err: totalErr } = await query.totalData();
+    if (totalErr) {
+      return {
+        err: new InternalServerError(totalErr as string),
+        data: null,
+      };
+    }
+
     const totalStatus0 = (total as TotalData[])
       .filter((item) => item.status === "0")
       .map((item) => item.total)[0];
@@ -139,7 +147,7 @@ class CommandDomain {
     const knn = knnToddlers(normalization, payload);
 
     // insert data
-    const { data: insert, err: insertErr } = await command.createData({
+    const { err: insertErr } = await command.createData({
       name: payload.name,
       gender: payload.gender,
       age: payload.age,
@@ -148,8 +156,68 @@ class CommandDomain {
       lila: payload.lila,
       status: knn.payload.status,
     });
+    if (insertErr) {
+      return {
+        err: new InternalServerError(insertErr as string),
+        data: null,
+      };
+    }
 
     return wrapper.data(knn);
+  }
+
+  async update(payload: UpdateData) {
+    const { data: user, err: userErr } = await query.findById(payload.id);
+    if (!user) {
+      return {
+        err: new NotFoundError("User data not found"),
+        data: null,
+      };
+    }
+    if (userErr) {
+      return {
+        err: new InternalServerError(userErr as string),
+        data: null,
+      };
+    }
+
+    const { data: update, err: updateErr } = await command.updateData(payload);
+    if (updateErr) {
+      return {
+        err: new InternalServerError(updateErr as string),
+        data: null,
+      };
+    }
+
+    return wrapper.data(update);
+  }
+
+  async delete(payload: { id: number }) {
+    const { data: user, err: userErr } = await query.findById(payload.id);
+    if (!user) {
+      return {
+        err: new NotFoundError("User data not found"),
+        data: null,
+      };
+    }
+    if (userErr) {
+      return {
+        err: new InternalServerError(userErr as string),
+        data: null,
+      };
+    }
+
+    const { data: remove, err: removeErr } = await command.removeData(
+      payload.id
+    );
+    if (removeErr) {
+      return {
+        err: new InternalServerError(removeErr as string),
+        data: null,
+      };
+    }
+
+    return wrapper.data(remove);
   }
 }
 

@@ -68,3 +68,14 @@ type InsertData = {
   lila: string;
   status: string;
 };
+
+type UpdateData = {
+  id: number;
+  name: string;
+  gender: string;
+  age: string;
+  weight: string;
+  height: string;
+  lila: string;
+  status: string;
+};

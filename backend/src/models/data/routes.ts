@@ -10,6 +10,13 @@ const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
+router.get("/data/list", verifyToken, queryModel.listSchema, queryHandler.list);
+router.get(
+  "/data/detail/:id",
+  verifyToken,
+  queryModel.detailSchema,
+  queryHandler.detail
+);
 router.post(
   "/data/upload",
   verifyToken,
@@ -22,12 +29,17 @@ router.post(
   commandModel.createSchema,
   commandHandler.create
 );
-router.get("/data/list", verifyToken, queryModel.listSchema, queryHandler.list);
-router.get(
-  "/data/detail/:id",
+router.patch(
+  "/data/update/:id",
   verifyToken,
-  queryModel.detailSchema,
-  queryHandler.detail
+  commandModel.updateSchema,
+  commandHandler.update
+);
+router.delete(
+  "/data/delete/:id",
+  verifyToken,
+  commandModel.removeSchema,
+  commandHandler.remove
 );
 
 export default router;
