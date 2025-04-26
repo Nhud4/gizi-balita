@@ -1,7 +1,7 @@
 type UploadDataPayload = {
   name: string;
   gender: string;
-  age: string;
+  age: number;
   weight: string;
   height: string;
   lila: string;
@@ -21,13 +21,11 @@ type DataList = {
   id: number;
   name: string;
   gender: string;
-  age: string;
+  age: number;
   weight: string;
   height: string;
   lila: string;
   status: string;
-  created_at: string;
-  updated_at: string;
 };
 
 type TotalData = {
@@ -52,7 +50,7 @@ type MaximumData = {
 type CreateDataPayload = {
   name: string;
   gender: string;
-  age: string;
+  age: number;
   weight: string;
   height: string;
   lila: string;
@@ -62,7 +60,7 @@ type CreateDataPayload = {
 type InsertData = {
   name: string;
   gender: string;
-  age: string;
+  age: number;
   weight: string;
   height: string;
   lila: string;
@@ -73,7 +71,7 @@ type UpdateData = {
   id: number;
   name: string;
   gender: string;
-  age: string;
+  age: number;
   weight: string;
   height: string;
   lila: string;

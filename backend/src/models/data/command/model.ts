@@ -6,7 +6,7 @@ const createSchema = (req: Request, res: Response, next: NextFunction) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     gender: Joi.string().required().valid("L", "P"),
-    age: Joi.string().required(),
+    age: Joi.number().integer().required(),
     weight: Joi.string().required(),
     height: Joi.string().required(),
     lila: Joi.string().required(),
@@ -21,7 +21,7 @@ const updateSchema = (req: Request, res: Response, next: NextFunction) => {
     id: Joi.number().integer().required(),
     name: Joi.string().required(),
     gender: Joi.string().required().valid("L", "P"),
-    age: Joi.string().required(),
+    age: Joi.number().integer().required(),
     weight: Joi.string().required(),
     height: Joi.string().required(),
     lila: Joi.string().required(),

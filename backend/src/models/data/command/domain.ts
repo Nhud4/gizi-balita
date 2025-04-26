@@ -35,7 +35,7 @@ class CommandDomain {
             const mapped = {
               name: (data["Nama"] as string).toUpperCase(),
               gender: (data["JK"] as string).toUpperCase(),
-              age: data["Usia (Bulan)"],
+              age: parseInt(data["Usia (Bulan)"]),
               weight: data["Berat"],
               height: data["Tinggi"],
               lila: data["LiLA"],
@@ -71,6 +71,17 @@ class CommandDomain {
       };
     }
 
+    const dataNormal = (data as DataList[]).map((item) => ({
+      id: item.id,
+      name: item.name,
+      gender: item.gender === "L" ? 1 : 0,
+      age: item.age,
+      weight: parseFloat(item.weight),
+      height: parseFloat(item.height),
+      lila: parseFloat(item.lila),
+      status: item.status,
+    }));
+
     // get total data
     const { data: total, err: totalErr } = await query.totalData();
     if (totalErr) {
@@ -88,10 +99,10 @@ class CommandDomain {
       .map((item) => item.total)[0];
 
     // get min data
-    const min = minimumFilter(data);
+    const min = minimumFilter(dataNormal);
 
     // get max data
-    const max = maximumFilter(data);
+    const max = maximumFilter(dataNormal);
 
     // filter minimum data
     let minStatus = "";
@@ -106,28 +117,14 @@ class CommandDomain {
       totalDistance = totalStatus0 - totalStatus1;
     }
 
-    const minority = (data as DataList[]).filter(
-      (item) => item.status === minStatus
-    );
-
-    // data normalization
-    const mapped = minority.map((item) => ({
-      id: item.id,
-      name: item.name,
-      gender: item.gender === "L" ? 1 : 0,
-      age: parseFloat(item.age),
-      weight: parseFloat(item.weight),
-      height: parseFloat(item.height),
-      lila: parseFloat(item.lila),
-      status: item.status,
-    }));
+    const minority = dataNormal.filter((item) => item.status === minStatus);
 
     // SMOTE
     const lastId = (data as DataList[])
       .map((item) => item.id)
       .sort((a, b) => b - a)
       .slice(0, 1)[0];
-    const smote = smoteToddlers(mapped, 3, totalDistance, lastId);
+    const smote = smoteToddlers(minority, 3, totalDistance, lastId);
 
     const joinData = [...data, ...smote];
 

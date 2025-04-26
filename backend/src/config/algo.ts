@@ -83,7 +83,7 @@ export function knnToddlers(data: ToddlersData[], payload: CreateDataPayload) {
   const gender = payload.gender === "L" ? 1 : 0;
   const feature = [
     gender,
-    parseFloat(payload.age),
+    payload.age,
     parseFloat(payload.weight),
     parseFloat(payload.height),
     parseFloat(payload.lila),
@@ -119,24 +119,24 @@ export function dataNormalization(data: number, min: number, max: number) {
   return (data - min) / (max - min);
 }
 
-export function minimumFilter(data: DataList[]) {
-  const age = (data as DataList[])
-    .map((item) => parseFloat(item.age))
+export function minimumFilter(data: ToddlersData[]) {
+  const age = (data as ToddlersData[])
+    .map((item) => item.age)
     .sort((a, b) => a - b)
     .slice(0, 1)[0];
 
-  const weight = (data as DataList[])
-    .map((item) => parseFloat(item.weight))
+  const weight = (data as ToddlersData[])
+    .map((item) => item.weight)
     .sort((a, b) => a - b)
     .slice(0, 1)[0];
 
-  const height = (data as DataList[])
-    .map((item) => parseFloat(item.height))
+  const height = (data as ToddlersData[])
+    .map((item) => item.height)
     .sort((a, b) => a - b)
     .slice(0, 1)[0];
 
-  const lila = (data as DataList[])
-    .map((item) => parseFloat(item.lila))
+  const lila = (data as ToddlersData[])
+    .map((item) => item.lila)
     .sort((a, b) => a - b)
     .slice(0, 1)[0];
 
@@ -148,24 +148,24 @@ export function minimumFilter(data: DataList[]) {
   };
 }
 
-export function maximumFilter(data: DataList[]) {
-  const age = (data as DataList[])
-    .map((item) => parseFloat(item.age))
+export function maximumFilter(data: ToddlersData[]) {
+  const age = (data as ToddlersData[])
+    .map((item) => item.age)
     .sort((a, b) => b - a)
     .slice(0, 1)[0];
 
-  const weight = (data as DataList[])
-    .map((item) => parseFloat(item.weight))
+  const weight = (data as ToddlersData[])
+    .map((item) => item.weight)
     .sort((a, b) => b - a)
     .slice(0, 1)[0];
 
-  const height = (data as DataList[])
-    .map((item) => parseFloat(item.height))
+  const height = (data as ToddlersData[])
+    .map((item) => item.height)
     .sort((a, b) => b - a)
     .slice(0, 1)[0];
 
-  const lila = (data as DataList[])
-    .map((item) => parseFloat(item.lila))
+  const lila = (data as ToddlersData[])
+    .map((item) => item.lila)
     .sort((a, b) => b - a)
     .slice(0, 1)[0];
 
