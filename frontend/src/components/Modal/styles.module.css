@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+.container {
+  @apply absolute inset-0 z-50 flex items-center justify-center bg-black/30;
+}
+
+.wrapper {
+  @apply py-4 bg-white rounded-xl;
+  min-width: 600px;
+}
+
+.header {
+  @apply flex flex-row-reverse items-center justify-between px-4 pb-4 border-b;
+  border-color: #acfaec;
+}
+
+.header > button {
+  @apply cursor-pointer;
+}
+
+.header > h5 {
+  @apply mt-1 ml-2 font-semibold;
+}

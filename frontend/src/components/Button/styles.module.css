@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+.base {
+  @apply flex justify-center items-center cursor-pointer rounded-lg text-sm px-4 py-3;
+  min-height: 50px;
+}
+
+.primary {
+  @apply text-white;
+  background-color: #009276;
+}
+
+.secondary {
+  background-color: #acfaec;
+}

@@ -17,14 +17,14 @@ const routes: Route[] = [
   {
     name: "Data Balita",
     path: "/data-balita",
-    icon: <ICONS.Chart width={24} height={24} />,
+    icon: <ICONS.Folder width={24} height={24} />,
     component: <PAGES.DataToddler />,
     isSidebar: true,
   },
   {
-    name: "Data Balita",
+    name: "Data Klasifikasi",
     path: "/data-kalsifikasi",
-    icon: <ICONS.Menu width={24} height={24} />,
+    icon: <ICONS.Data width={24} height={24} />,
     component: <PAGES.DataClassification />,
     isSidebar: true,
   },

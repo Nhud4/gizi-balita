@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+.container {
+  @apply fixed z-40 w-full flex justify-between items-center pr-4;
+  padding-left: 256px;
+  background-color: white;
+  height: 86px;
+}
+
+.container > h2 {
+  @apply text-xl font-semibold;
+}
+
+.wrapper {
+  @apply flex items-center gap-4;
+}
+
+.admin {
+  @apply flex items-center space-x-2 pl-6 rounded-full text-sm border-2;
+  border-color: #38f4d1;
+}
+
+.admin > h1 {
+  @apply font-medium;
+}
+
+.admin > img {
+  @apply border-2 rounded-full;
+  margin-right: 1-px;
+  border-color: #38f4d1;
+}
+
+.button {
+  @apply p-4 rounded-full cursor-pointer;
+  background-color: #acfaec;
+}
+
+.button > svg {
+  color: #004537;
+}
+
+.button:hover {
+  background-color: #e63946;
+}
+
+.button:hover > svg {
+  color: #ffffff;
+}

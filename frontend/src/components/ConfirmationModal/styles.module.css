@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+.container {
+  @apply absolute inset-0 z-50 flex items-center justify-center bg-black/30;
+}
+
+.wrapper {
+  @apply py-6 bg-white rounded-xl space-y-4;
+  width: 448px;
+}
+
+.confirm {
+  @apply w-32 border;
+  border-color: #009276;
+}
+
+.cancel {
+  @apply w-32 !bg-white border;
+  border-color: #009276;
+  color: #009276 !important;
+}

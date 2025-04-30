@@ -39,13 +39,14 @@
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
+    color: #4a4a4a;
   }
 
   :root {
     font-family: "Poppins";
 
-    color: #213547;
-    background-color: #f4f7fe;
+    color: #4a4a4a;
+    background-color: #eeeeee;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;

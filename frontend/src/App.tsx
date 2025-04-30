@@ -3,14 +3,8 @@ import { withErrorBoundary } from "react-error-boundary";
 import { hot } from "react-hot-loader/root";
 import React, { Suspense } from "react";
 import routes from "./routes";
-
-function FallbackPage() {
-  return <div>Hey Hey</div>;
-}
-
-function ErrorFallback() {
-  return <div>Error</div>;
-}
+import FallbackPage from "./components/FallbackPage";
+import ErrorFallback from "./components/ErrorFallback";
 
 const App: React.FC = () => {
   return (
