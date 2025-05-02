@@ -28,7 +28,7 @@ export const PasswordInput = ({
         className={clsx([
           "relative border px-4 py-3 rounded-md",
           "focus-within:outline focus-within:outline-[#108a4a]",
-          errMessage ? "border-red-500" : "border-[#CAC0C0]",
+          errMessage ? "border-red-500" : "border-[#E5E5E5]",
         ])}
       >
         <input

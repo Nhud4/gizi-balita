@@ -19,11 +19,7 @@ export const column = (loading: boolean): TableColumn<DataList>[] => [
   {
     name: "Jenis Kelamin",
     cell: ({ gender }) => (
-      <TableCell
-        loading={loading}
-        skeletonWidth={100}
-        value={gender === "L" ? "Laki-laki" : "Prempuan"}
-      />
+      <TableCell loading={loading} skeletonWidth={100} value={gender} />
     ),
   },
   {

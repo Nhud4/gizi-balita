@@ -13,7 +13,7 @@ export const Layout: React.FC<Props> = ({ title, withSidebar, children }) => {
   return (
     <div>
       {withSidebar ? <Sidebar /> : null}
-      <main>
+      <main className="min-h-screen bg-[#eeeeee]">
         <Header title={title} />
         <div className="pl-[256px] pb-8 pr-4 pt-[104px]">{children}</div>
       </main>

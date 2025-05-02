@@ -20,6 +20,7 @@ type Props<T> = {
   filterFields?: FilterField[];
   onFilter?: (params: Record<string, unknown>) => void;
   onSearch?: (search: string) => void;
+  actionComponent?: React.ReactNode;
 };
 
 const options = [
@@ -68,6 +69,7 @@ export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
   filterFields,
   onFilter,
   onSearch,
+  actionComponent,
 }) => {
   const windowHeight = useWindowHeight();
   const windowWidth = useWindowWidth();
@@ -122,14 +124,14 @@ export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 border px-4 py-3 rounded-lg border-[#E5E5E5]">
+          <div className="flex items-center gap-2 border px-4 h-[45px] rounded-lg border-[#E5E5E5]">
             <ICONS.Search width={25} height={25} />
             <input
               type="text"
               className="w-full outline-none text-sm"
               placeholder="Cari disini..."
               onChange={({ target: { value } }) => setSearch(value)}
-              value={search as string}
+              value={search || ""}
             />
           </div>
 
@@ -141,6 +143,8 @@ export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
               selected={selected}
             />
           ) : null}
+
+          {actionComponent}
         </div>
       </div>
 
@@ -174,6 +178,7 @@ export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
               menuPlacement="auto"
               options={options}
               styles={customStyles}
+              isSearchable={false}
             />
           </div>
           <div className="flex items-center gap-3">

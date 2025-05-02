@@ -22,7 +22,7 @@ export const Modal: React.FC<Props> = ({
         <div className={styles.wrapper}>
           <div className={styles.header}>
             <button onClick={onClose}>
-              <ICONS.Close height="26" width="26" />
+              <ICONS.Close height="24" width="24" />
             </button>
             {title ? <h5>{title}</h5> : null}
           </div>

@@ -10,8 +10,7 @@
 }
 
 .header {
-  @apply flex flex-row-reverse items-center justify-between px-4 pb-4 border-b;
-  border-color: #acfaec;
+  @apply flex items-center px-4 pb-4;
 }
 
 .header > button {

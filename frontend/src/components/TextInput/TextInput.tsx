@@ -4,25 +4,25 @@ import { clsx } from "../../utils";
 
 type Props = {
   label?: string;
-  isArea?: boolean;
   isRequired?: boolean;
   onlyNumber?: boolean;
   onlyLetter?: boolean;
   withoutSpecialCharacter?: boolean;
   upperCase?: boolean;
   errMessage?: string;
+  prefix?: string;
 } & InputHTMLAttributes<HTMLInputElement> &
   InputHTMLAttributes<HTMLTextAreaElement>;
 
 export const TextInput = ({
   label,
-  isArea,
   isRequired,
   onlyNumber,
   onlyLetter,
   withoutSpecialCharacter,
   upperCase,
   errMessage,
+  prefix,
   ...props
 }: Props) => {
   function transFormValue<E>(event: React.ChangeEvent<E>) {
@@ -69,31 +69,28 @@ export const TextInput = ({
 
   return (
     <div className="space-y-1">
-      <h1 className="text-left font-medium">
+      <h1 className="text-sm text-left font-medium">
         {label}
         {isRequired ? <span>*</span> : null}
       </h1>
       <div
         className={clsx([
-          "border px-4 py-3 rounded-md",
+          "flex items-center gap-2 border px-4 py-3 rounded-md",
           "focus-within:outline focus-within:outline-[#108a4a]",
-          errMessage ? "border-red-500" : "border-[#CAC0C0]",
+          errMessage ? "border-red-500" : "border-[#E5E5E5]",
         ])}
       >
-        {isArea ? (
-          <textarea {...props} className="w-full outline-none h-28" />
-        ) : (
-          <input
-            {...props}
-            type="text"
-            className="w-full outline-none"
-            onChange={(e) => {
-              if (props.onChange) {
-                props.onChange(transFormValue(e));
-              }
-            }}
-          />
-        )}
+        <input
+          {...props}
+          type="text"
+          className="text-sm w-full outline-none"
+          onChange={(e) => {
+            if (props.onChange) {
+              props.onChange(transFormValue(e));
+            }
+          }}
+        />
+        {prefix ? <p className="text-sm font-semibold">{prefix}</p> : null}
       </div>
       {errMessage ? (
         <p

@@ -38,7 +38,7 @@ export const TableFilter: React.FC<Props> = ({
   return (
     <div {...props} className={clsx(["relative", className as string])}>
       <button
-        className={clsx(["p-2 rounded-md cursor-pointer bg-[#ACFAEC]"])}
+        className="flex justify-center items-center rounded-lg cursor-pointer bg-[#ACFAEC] h-[45px] w-[45px]"
         onClick={() => setOpen(!open)}
         type="button"
       >
