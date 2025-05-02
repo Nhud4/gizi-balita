@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useMemo, useState } from "react";
-import Modal from "../../components/Modal";
+
 import ConfirmationModal from "../../components/ConfirmationModal";
+import Modal from "../../components/Modal";
 
 type Props = {
   children: React.ReactNode;

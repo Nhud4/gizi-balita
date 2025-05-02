@@ -1,4 +1,5 @@
 import React from "react";
+
 import IMAGES from "../../configs/images";
 import Button from "../Button";
 

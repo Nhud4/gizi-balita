@@ -1,6 +1,6 @@
 import React from "react";
-import ICONS from "../../configs/icons";
 
+import ICONS from "../../configs/icons";
 import styles from "./styles.module.css";
 
 type Props = {

@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "../Button";
 
+import Button from "../Button";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -9,6 +9,7 @@ type Props = {
   title?: string;
   children: React.ReactNode;
   confirmationType?: "delete" | "add" | "edit" | "logout";
+  onConfirm?: () => void;
 };
 
 export const ConfirmationModal: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const ConfirmationModal: React.FC<Props> = ({
   onClose,
   children,
   confirmationType,
+  onConfirm,
 }) => {
   if (open) {
     return (
@@ -27,13 +29,17 @@ export const ConfirmationModal: React.FC<Props> = ({
               <Button className={styles.cancel} onClick={onClose}>
                 Batal
               </Button>
-              <Button className={styles.confirm}>Konfirmasi</Button>
+              <Button className={styles.confirm} onClick={onConfirm}>
+                Konfirmasi
+              </Button>
             </div>
           ) : null}
 
           {confirmationType === "delete" ? (
             <div className="flex justify-center items-center gap-4">
-              <Button className={styles.cancel}>Ya, Hapus</Button>
+              <Button className={styles.cancel} onClick={onConfirm}>
+                Ya, Hapus
+              </Button>
               <Button className={styles.confirm} onClick={onClose}>
                 Batal
               </Button>
@@ -42,7 +48,9 @@ export const ConfirmationModal: React.FC<Props> = ({
 
           {confirmationType === "logout" ? (
             <div className="flex justify-center items-center gap-4">
-              <Button className={styles.cancel}>Ya, Keluar</Button>
+              <Button className={styles.cancel} onClick={onConfirm}>
+                Ya, Keluar
+              </Button>
               <Button className={styles.confirm} onClick={onClose}>
                 Batal
               </Button>

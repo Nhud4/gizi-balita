@@ -1,11 +1,11 @@
 import Avatar from "../assets/images/Avatar.png";
 import CsvFile from "../assets/images/csv-file.png";
-import Remove from "../assets/images/remove.png";
-import Question from "../assets/images/question.png";
+import Power from "../assets/images/power-on.png";
 import Waiting from "../assets/images/process.png";
+import Question from "../assets/images/question.png";
+import Remove from "../assets/images/remove.png";
 import Error from "../assets/images/repair.png";
 import Empty from "../assets/images/research.png";
-import Power from "../assets/images/power-on.png";
 
 const IMAGES = {
   Avatar,

@@ -34,17 +34,6 @@ export const getUserToken = () => {
   return data ? JSON.parse(data) : null;
 };
 
-const AUTH = "auth";
-
-export const setAuth = () => {
-  localStorage.setItem(AUTH, JSON.stringify({ token: "fdsa" }));
-};
-
-export const getAuth = () => {
-  const data = localStorage.getItem(AUTH);
-  return data ? JSON.parse(data) : null;
-};
-
 export const clearStorage = () => {
   localStorage.clear();
 };

@@ -1,5 +1,5 @@
-import PAGES from "../configs/pages";
 import ICONS from "../configs/icons";
+import PAGES from "../configs/pages";
 
 const routes: Route[] = [
   {

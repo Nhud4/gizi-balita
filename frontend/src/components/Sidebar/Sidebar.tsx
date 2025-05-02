@@ -1,8 +1,8 @@
 import React from "react";
-import routes from "../../routes";
-import ICONS from "../../configs/icons";
 import { useLocation } from "react-router-dom";
 
+import ICONS from "../../configs/icons";
+import routes from "../../routes";
 import styles from "./styles.module.css";
 
 export const Sidebar: React.FC = () => {

@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import IMAGES from "../../configs/images";
-import ICONS from "../../configs/icons";
-import { ModalContext } from "../../contexts/ModalContext";
-import ConfirmationContent from "../ConfirmationContent";
 
+import ICONS from "../../configs/icons";
+import IMAGES from "../../configs/images";
+import { ModalContext } from "../../contexts/ModalContext";
+import { clearStorage } from "../../storage";
+import ConfirmationContent from "../ConfirmationContent";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -19,6 +20,10 @@ export const Header: React.FC<Props> = ({ title }) => {
       content: <ConfirmationContent confirmationType="logout" />,
       type: "confirmation",
       confirmationType: "logout",
+      onConfirm: () => {
+        clearStorage();
+        window.location.href = "/login";
+      },
     });
   };
 

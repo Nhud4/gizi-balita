@@ -1,7 +1,7 @@
 import React from "react";
-import Sidebar from "../Sidebar";
+
 import Header from "../Header";
-import { ToastContainer } from "react-toastify";
+import Sidebar from "../Sidebar";
 
 type Props = {
   children: React.ReactNode;
@@ -17,19 +17,6 @@ export const Layout: React.FC<Props> = ({ title, withSidebar, children }) => {
         <Header title={title} />
         <div className="pl-[256px] pb-8 pr-4 pt-[104px]">{children}</div>
       </main>
-
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover={false}
-        theme="colored"
-      />
     </div>
   );
 };
