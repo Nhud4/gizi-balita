@@ -27,9 +27,6 @@ export const FormLogin: React.FC = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const date = new Date();
-    date.setDate(date.getDate() + 1);
-
     if (!formValues.username || !formValues.password) {
       if (!formValues.username) {
         setErr((prev) => ({
@@ -78,7 +75,7 @@ export const FormLogin: React.FC = () => {
   }, [isLogin]);
 
   return (
-    <form className="w-[75%] space-y-8" onSubmit={onSubmit}>
+    <form className="w-[65%] space-y-8" onSubmit={onSubmit}>
       <div className="text-left space-y-3">
         <h1 className="text-2xl font-bold">Masuk ke Akun Anda</h1>
         <p className="text-[#9E9E9E]">

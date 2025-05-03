@@ -69,15 +69,9 @@ export const useMutationSlice = <T>({
     add: "Data berhasil ditambahkan",
     edit: "Data berhasil diperbarui",
     remove: "Data berhasil dihapus",
-    login: "Anda berhasil masuk",
-    register: "Akun berhasil dibuat",
+    login: "Anda berhasil login, tunggu beberapa saat untuk masuk ke beranda",
+    register: "Pendaftaran berhasil, silahkan masuk dengan akun anda",
   };
-
-  // const errorMessage = {
-  //   add: "Terjadi kesalahan saat menambahkan data",
-  //   edit: "Terjadi kesalahan saat memperbarui data",
-  //   remove: "Terjadi kesalahan saat menghapus data",
-  // };
 
   useEffect(() => {
     if (clearSlice) {

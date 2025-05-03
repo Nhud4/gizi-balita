@@ -1,0 +1,14 @@
+.Toastify__toast--success {
+  width: fit-content;
+  min-width: 20rem;
+  max-width: 90vh;
+  background: #009276 !important;
+  border-radius: 999px;
+}
+.Toastify__toast--error {
+  width: fit-content;
+  min-width: 20rem;
+  max-width: 90vh;
+  background: #e63946 !important;
+  border-radius: 999px;
+}

@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import Button from "../../components/Button";
 import PasswordInput from "../../components/PasswordInput";
+import Spinner from "../../components/Spinner";
 import TextInput from "../../components/TextInput";
+import { useAppDispatch, useMutationSlice } from "../../redux/hooks";
+import { clearAuth } from "../../redux/slice/auth";
+import { fetchRegisterUSer } from "../../redux/slice/auth/action";
 
 type Props = {
   onSuccess?: () => void;
@@ -52,6 +56,7 @@ const MessageErr = (
 export const FormRegister: React.FC<Props> = ({ onSuccess, isSignUp }) => {
   const [formValues, setFormValues] = useState(defaultValues);
   const [err, setErr] = useState(defaultErr);
+  const dispatch = useAppDispatch();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,10 +68,27 @@ export const FormRegister: React.FC<Props> = ({ onSuccess, isSignUp }) => {
       !formValues.confirmPassword
     ) {
       MessageErr(formValues, setErr);
-    } else if (onSuccess) {
-      onSuccess();
+    } else {
+      dispatch(
+        fetchRegisterUSer({
+          name: formValues.name,
+          password: formValues.password,
+          username: formValues.username,
+        })
+      );
     }
   };
+
+  const { loading } = useMutationSlice({
+    key: "register",
+    slice: "auth",
+    clearSlice: () => dispatch(clearAuth("register")),
+    onSuccess: () => {
+      if (onSuccess) {
+        onSuccess();
+      }
+    },
+  });
 
   useEffect(() => {
     Object.keys(formValues).forEach((item) => {
@@ -79,7 +101,7 @@ export const FormRegister: React.FC<Props> = ({ onSuccess, isSignUp }) => {
       }
     });
 
-    if (formValues.password || formValues.confirmPassword) {
+    if (formValues.confirmPassword) {
       setErr((prev) => ({
         ...prev,
         confirmPassword:
@@ -97,7 +119,7 @@ export const FormRegister: React.FC<Props> = ({ onSuccess, isSignUp }) => {
   }, [isSignUp]);
 
   return (
-    <form className="w-[75%] space-y-8" onSubmit={onSubmit}>
+    <form className="w-[65%] space-y-8" onSubmit={onSubmit}>
       <div className="text-left space-y-3">
         <h1 className="text-2xl font-bold">Daftar Akun Baru</h1>
         <p className="text-[#9E9E9E]">
@@ -155,7 +177,7 @@ export const FormRegister: React.FC<Props> = ({ onSuccess, isSignUp }) => {
       </div>
 
       <Button className="!rounded-full !w-full font-semibold" type="submit">
-        Buat Akun
+        {loading ? <Spinner /> : "Buat Akun"}
       </Button>
     </form>
   );

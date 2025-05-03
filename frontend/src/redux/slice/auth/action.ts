@@ -13,3 +13,27 @@ export const fetchLoginUser = createAsyncThunk(
     }
   }
 );
+
+export const fetchRegisterUSer = createAsyncThunk(
+  "auth/register",
+  async (payload: RegisterPayload, { rejectWithValue }) => {
+    try {
+      const response = await services.register(payload);
+      return response;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  }
+);
+
+export const fetchProfileUser = createAsyncThunk(
+  "auth/profile",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await services.profile();
+      return response;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  }
+);

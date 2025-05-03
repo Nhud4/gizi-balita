@@ -1,5 +1,4 @@
 import React, { JSX, useState } from "react";
-import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
 import ICONS from "../../configs/icons";
@@ -46,13 +45,7 @@ export const Login: React.FC = (): JSX.Element => {
         `}
       >
         <div className={styles.wrapperForm}>
-          <FormRegister
-            isSignUp={isSignUp}
-            onSuccess={() => {
-              toast.success("Akun berhasil di buat");
-              setIsSignUp(false);
-            }}
-          />
+          <FormRegister isSignUp={isSignUp} />
         </div>
       </div>
 
