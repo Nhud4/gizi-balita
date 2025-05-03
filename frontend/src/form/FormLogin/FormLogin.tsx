@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import Button from "../../components/Button";
 import PasswordInput from "../../components/PasswordInput";
+import Spinner from "../../components/Spinner";
 import TextInput from "../../components/TextInput";
+import { useAppDispatch, useMutationSlice } from "../../redux/hooks";
+import { clearAuth } from "../../redux/slice/auth";
+import { fetchLoginUser } from "../../redux/slice/auth/action";
 import { setUserToken } from "../../storage";
 
 const defaultValues = {
@@ -18,6 +22,8 @@ const defaultErr = {
 export const FormLogin: React.FC = () => {
   const [formValues, setFormValues] = useState<LoginPayload>(defaultValues);
   const [err, setErr] = useState(defaultErr);
+  const [isLogin, setIsLogin] = useState(false);
+  const dispatch = useAppDispatch();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,10 +44,19 @@ export const FormLogin: React.FC = () => {
         }));
       }
     } else {
-      setUserToken({ exp: date.toISOString(), token: formValues.username });
-      window.location.href = "/";
+      dispatch(fetchLoginUser(formValues));
     }
   };
+
+  const { loading } = useMutationSlice({
+    key: "login",
+    slice: "auth",
+    clearSlice: () => dispatch(clearAuth("login")),
+    onSuccess: (data) => {
+      setUserToken(data as UserToken);
+      setIsLogin(true);
+    },
+  });
 
   useEffect(() => {
     if (formValues.username) {
@@ -51,6 +66,16 @@ export const FormLogin: React.FC = () => {
       setErr((prev) => ({ ...prev, password: "" }));
     }
   }, [formValues]);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (isLogin) {
+      timeout = setTimeout(() => {
+        window.location.href = "/";
+      }, 3000);
+    }
+    return () => clearTimeout(timeout);
+  }, [isLogin]);
 
   return (
     <form className="w-[75%] space-y-8" onSubmit={onSubmit}>
@@ -87,7 +112,7 @@ export const FormLogin: React.FC = () => {
       </div>
 
       <Button className="!rounded-full !w-full font-semibold" type="submit">
-        Masuk
+        {loading ? <Spinner /> : "Masuk"}
       </Button>
     </form>
   );

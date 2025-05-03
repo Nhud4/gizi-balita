@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import type { AppDispatch, RootState } from "./store";
 
@@ -27,6 +28,7 @@ export const useQuerySlice = <T, P>({
     if (clearSlice) {
       if (error) {
         dispatch(clearSlice);
+        toast.error("Terjadi kesalahan saat mengambil data");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,12 +65,31 @@ export const useMutationSlice = <T>({
   });
   const { error, success, message, data } = sliceState;
 
+  const successMessage = {
+    add: "Data berhasil ditambahkan",
+    edit: "Data berhasil diperbarui",
+    remove: "Data berhasil dihapus",
+    login: "Anda berhasil masuk",
+    register: "Akun berhasil dibuat",
+  };
+
+  // const errorMessage = {
+  //   add: "Terjadi kesalahan saat menambahkan data",
+  //   edit: "Terjadi kesalahan saat memperbarui data",
+  //   remove: "Terjadi kesalahan saat menghapus data",
+  // };
+
   useEffect(() => {
     if (clearSlice) {
       if (error || success) {
         if (success) {
           if (onSuccess) onSuccess(data);
           clearSlice();
+          toast.success(successMessage[key]);
+        }
+
+        if (error) {
+          toast.error(message);
         }
       }
     }

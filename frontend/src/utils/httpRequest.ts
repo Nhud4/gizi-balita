@@ -20,13 +20,13 @@ export const baseFetch = async (
   const user = getUserToken() as UserToken;
   const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
   const isFormData = body instanceof FormData;
-  if (!isFormData) {
-    headers.set("Content-Type", "application/json");
-  }
-  if (!user) headers.set("Authorization", `Basic ${basicCredentials}`);
+  headers.set("Content-type", "application/json");
+
   if (user) {
     const { token } = user;
     if (token) headers.set("Authorization", `Bearer ${token}`);
+  } else {
+    headers.set("Authorization", `Basic ${basicCredentials}`);
   }
 
   return fetch(url, {
@@ -38,7 +38,7 @@ export const baseFetch = async (
     clearTimeout(timeoutId);
     if ([401].includes(response.status)) {
       clearStorage();
-      window.location.href = "/";
+      window.location.href = "/login";
     }
     return response;
   });

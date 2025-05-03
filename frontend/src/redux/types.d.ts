@@ -18,7 +18,7 @@ type SliceReducer<S> = {
 type QuerySliceParams<T, S> = {
   clearSlice?: ActionCreatorWithPayload;
   initial?: unknown;
-  key: "detail" | "list";
+  key: "detail" | "list" | "profile";
   onSuccess?: (data: S) => void;
   slice: keyof T;
   thunk: AsyncThunk;
@@ -26,7 +26,7 @@ type QuerySliceParams<T, S> = {
 
 type MutationSliceParams<S, T> = {
   clearSlice?: () => void;
-  key: "add" | "edit" | "remove";
+  key: "add" | "edit" | "remove" | "login" | "register";
   onError?: () => void;
   onSuccess?: (data: T) => void;
   slice: keyof S;
