@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.horizontal {
+  @apply flex items-center justify-between;
+}
+
+.horizontal > div {
+  @apply w-1/2;
+}

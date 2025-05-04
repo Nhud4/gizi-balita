@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.chart {
+  height: 20rem;
+}

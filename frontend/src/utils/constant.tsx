@@ -22,3 +22,8 @@ export const FILTER_FIELDS: Record<string, FilterField> = {
     type: "single",
   },
 };
+
+export const GENDER_OPS: DropdownOption[] = [
+  { label: "Laki-laki", value: "L" },
+  { label: "Perempuan", value: "P" },
+];

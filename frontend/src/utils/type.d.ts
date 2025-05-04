@@ -15,3 +15,8 @@ type SelectRow<T> = {
   selectedCount: number;
   selectedRows: T[];
 };
+
+type DropdownOption = {
+  label: string;
+  value: string;
+};
