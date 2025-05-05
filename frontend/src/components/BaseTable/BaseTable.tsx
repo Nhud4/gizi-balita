@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import Select, { StylesConfig } from "react-select";
 
 import ICONS from "../../configs/icons";
 import IMAGES from "../../configs/images";
+import { clsx } from "../../utils";
 import { tableStyles } from "../../utils/datatable";
 import {
   useDebounce,
@@ -21,6 +22,10 @@ type Props<T> = {
   onFilter?: (params: Record<string, unknown>) => void;
   onSearch?: (search: string) => void;
   actionComponent?: React.ReactNode;
+  meta?: Meta;
+  totalRows?: number;
+  onChangePage?: (page: number) => void;
+  onChangeRowPerPage?: (size: number) => void;
 };
 
 const options = [
@@ -65,11 +70,15 @@ const customStyles: StylesConfig = {
 export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
   data,
   columns,
+  meta,
   title,
   filterFields,
+  totalRows,
   onFilter,
   onSearch,
+  onChangePage,
   actionComponent,
+  onChangeRowPerPage,
 }) => {
   const windowHeight = useWindowHeight();
   const windowWidth = useWindowWidth();
@@ -91,6 +100,20 @@ export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
   const [alreadyFiltered, setAlreadyFiltered] = useState(hasFilter);
   const [search, setSearch] = useState<string | null>(null);
   const debounceSearch = useDebounce(search, 500);
+
+  const showingInfo = useMemo(() => {
+    const start =
+      Number(meta?.page) === 1
+        ? 1
+        : Number(totalRows) * (Number(meta?.page) - 1) + 1;
+    const end = Number(meta?.page) * Number(totalRows || 0);
+
+    return Number(meta?.totalData)
+      ? `${start} - ${
+          end > Number(meta?.totalData) ? Number(meta?.totalData) : end
+        }`
+      : "0";
+  }, [meta?.page, totalRows, meta?.totalData]);
 
   useEffect(() => {
     if (withFilter && alreadyFiltered) {
@@ -119,7 +142,7 @@ export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
         <div className="flex items-center gap-4">
           <h1 className="text-xl font-semibold">{title}</h1>
           <span className="text-sm px-3 py-[6px] rounded-lg bg-[#ACFAEC]">
-            50
+            {meta?.totalData || 0}
           </span>
         </div>
 
@@ -141,6 +164,7 @@ export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
               fields={filterFields}
               onChange={onChangeFilter}
               selected={selected}
+              closeFilter
             />
           ) : null}
 
@@ -168,30 +192,83 @@ export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
         }
       />
 
-      <div className="flex justify-between items-center text-sm">
-        <div>1 - 10 dari 50</div>
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <p>Menampilkan baris perhalaman</p>
-            <Select
-              defaultValue={options[0]}
-              menuPlacement="auto"
-              options={options}
-              styles={customStyles}
-              isSearchable={false}
-            />
+      {meta ? (
+        <div className="flex justify-between items-center text-xs mt-8">
+          <div>
+            {showingInfo} dari {meta?.totalData}
           </div>
-          <div className="flex items-center gap-3">
-            <button className="border border-[#E5E5E5] rounded-md rotate-90 p-1">
-              <ICONS.Arrow width={15} height={15} style={{ fill: "#9E9E9E" }} />
-            </button>
-            <p>1/5</p>
-            <button className="border border-[#E5E5E5] rounded-md -rotate-90 p-1 cursor-pointer">
-              <ICONS.Arrow width={15} height={15} />
-            </button>
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <p>Menampilkan baris perhalaman</p>
+              <Select
+                defaultValue={options[0]}
+                menuPlacement="auto"
+                options={options}
+                styles={customStyles}
+                isSearchable={false}
+                onChange={(newValue) => {
+                  const option = newValue as { value: number; label: number };
+                  if (onChangeRowPerPage) {
+                    onChangeRowPerPage(option.value);
+                  }
+                }}
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                className="border border-[#E5E5E5] rounded-md rotate-90 p-1"
+                onClick={() => {
+                  const currentPage = meta?.page as number;
+                  if (onChangePage) {
+                    onChangePage(currentPage - 1);
+                  }
+                }}
+                disabled={meta?.page === 1}
+              >
+                <ICONS.Arrow
+                  width={15}
+                  height={15}
+                  style={{ fill: meta?.page === 1 ? "#9E9E9E" : "" }}
+                />
+              </button>
+              <p>
+                {meta?.page}/{" "}
+                <span className="opacity-70">
+                  {meta?.totalPage === 0 ? 1 : meta?.totalPage}
+                </span>{" "}
+              </p>
+              <button
+                className={clsx([
+                  "border border-[#E5E5E5] rounded-md -rotate-90 p-1",
+                  meta?.page === meta?.totalPage || meta?.totalPage === 0
+                    ? "cursor-default"
+                    : "cursor-pointer",
+                ])}
+                disabled={Boolean(
+                  meta?.page === meta?.totalPage || meta?.totalPage === 0
+                )}
+                onClick={() => {
+                  const currentPage = meta?.page as number;
+                  if (onChangePage) {
+                    onChangePage(currentPage + 1);
+                  }
+                }}
+              >
+                <ICONS.Arrow
+                  width={15}
+                  height={15}
+                  style={{
+                    fill:
+                      meta?.page === meta?.totalPage || meta?.totalPage === 0
+                        ? "#9E9E9E"
+                        : "",
+                  }}
+                />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };

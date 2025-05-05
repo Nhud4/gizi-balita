@@ -25,7 +25,6 @@ export const tableStyles = (resetSort?: boolean): TableStyles => ({
       background: "#fff",
       paddingLeft: 10, // 15
       paddingRight: 10, // 15
-      paddingBottom: 25,
       position: "relative",
     },
   },

@@ -78,6 +78,7 @@ export const TextInput = ({
           "flex items-center gap-2 border px-4 py-3 rounded-md",
           "focus-within:outline focus-within:outline-[#108a4a]",
           errMessage ? "border-red-500" : "border-[#E5E5E5]",
+          props.disabled ? "bg-[#F2F2F2]" : "",
         ])}
       >
         <input

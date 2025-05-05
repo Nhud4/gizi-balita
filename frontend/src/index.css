@@ -53,4 +53,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  .css-olqui2-singleValue {
+    color: #4a4a4a !important;
+  }
 }

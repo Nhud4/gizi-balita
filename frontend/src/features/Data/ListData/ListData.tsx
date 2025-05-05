@@ -1,15 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import BaseTable from "../../../components/BaseTable";
 import Button from "../../../components/Button";
+import ConfirmationContent from "../../../components/ConfirmationContent";
 import ICONS from "../../../configs/icons";
 import { ModalContext } from "../../../contexts/ModalContext";
+import FormData from "../../../form/FormData";
+import { useQuerySlice } from "../../../redux/hooks";
+import { clearData } from "../../../redux/slice/data";
+import { fetchListData } from "../../../redux/slice/data/action";
 import { FILTER_FIELDS } from "../../../utils/constant";
 import UploadData from "../UploadData";
 import { column } from "./column";
 
+const initialParams: DataListParams = {
+  page: 1,
+  size: 10,
+};
+
 export const ListData: React.FC = () => {
+  const [params, setParams] = useState(initialParams);
   const { setModal } = useContext(ModalContext);
+
+  const { data, loading, meta } = useQuerySlice<DataList[], DataListParams>({
+    key: "list",
+    slice: "data",
+    clearSlice: clearData("list"),
+    thunk: fetchListData(params),
+    initial: params,
+  });
 
   const onUpload = () => {
     setModal({
@@ -17,6 +36,42 @@ export const ListData: React.FC = () => {
       content: <UploadData />,
       title: "Unggah Data Balita",
     });
+  };
+
+  const onAction = (type: "detail" | "edit", values: DataList) => {
+    setModal({
+      open: true,
+      content: <FormData formType={type} detail={values} />,
+      title: type === "detail" ? "Detail Data Balita" : "Ubah Data Balita",
+    });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onDelete = (_id: number) => {
+    setModal({
+      open: true,
+      content: <ConfirmationContent confirmationType="delete" />,
+      type: "confirmation",
+      confirmationType: "delete",
+    });
+  };
+
+  const onFilter = (filter: Record<string, unknown>) => {
+    setParams({ ...params, ...filter, page: 1 });
+  };
+
+  const onSearch = (search: string) => {
+    if (search !== null) {
+      setParams({ ...params, search, page: 1 });
+    }
+  };
+
+  const onChangePage = (page: number) => {
+    setParams({ ...params, page });
+  };
+
+  const onChangeRowPerPage = (size: number) => {
+    setParams({ ...params, size, page: 1 });
   };
 
   return (
@@ -30,11 +85,21 @@ export const ListData: React.FC = () => {
           Unggah Data
         </Button>
       }
-      columns={column(false)}
-      data={[]}
+      columns={column({
+        loading,
+        onDetail: (values) => onAction("detail", values),
+        onEdit: (values) => onAction("edit", values),
+        onDelete: (value) => onDelete(value),
+      })}
+      data={data}
+      meta={meta}
       filterFields={[FILTER_FIELDS.STATUS, FILTER_FIELDS.GENDER]}
-      onFilter={() => {}}
+      onFilter={onFilter}
+      onSearch={onSearch}
+      onChangePage={onChangePage}
+      onChangeRowPerPage={onChangeRowPerPage}
       title="Daftar Balita"
+      totalRows={Number(params.size || 0)}
     />
   );
 };

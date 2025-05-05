@@ -50,7 +50,7 @@ export const useQuerySlice = <T, P>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initial]);
 
-  return { ...sliceState, refetch: (args?: P) => dispatch(thunk) };
+  return { ...sliceState, refetch: (_args?: P) => dispatch(thunk) };
 };
 
 export const useMutationSlice = <T>({
@@ -71,6 +71,7 @@ export const useMutationSlice = <T>({
     remove: "Data berhasil dihapus",
     login: "Anda berhasil login, tunggu beberapa saat untuk masuk ke beranda",
     register: "Pendaftaran berhasil, silahkan masuk dengan akun anda",
+    upload: "Data berhasil diunggah",
   };
 
   useEffect(() => {

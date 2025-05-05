@@ -1,15 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 
 import Button from "../../../components/Button";
 import Spinner from "../../../components/Spinner";
 import ICONS from "../../../configs/icons";
 import IMAGES from "../../../configs/images";
+import { ModalContext } from "../../../contexts/ModalContext";
 
 export const UploadData: React.FC = () => {
   const ref = useRef<HTMLInputElement>(null);
   const [, setDoc] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
   const [loadSubmit, setLoadSubmit] = useState(false);
+  const { onClose } = useContext(ModalContext);
 
   return (
     <div className="relative flex flex-col gap-6">
@@ -52,10 +54,19 @@ export const UploadData: React.FC = () => {
       </div>
 
       <div className="flex justify-end items-center gap-4">
-        <Button className="!bg-white border !border-[#009276] !text-[#009276]">
+        <Button
+          className="!bg-white border !border-[#009276] !text-[#009276]"
+          onClick={onClose}
+        >
           Tutup
         </Button>
-        <Button onClick={() => setLoadSubmit(true)}>Simpan</Button>
+        <Button
+          leftIcon={<ICONS.Save width={20} height={20} />}
+          onClick={() => setLoadSubmit(true)}
+          disabled={loadSubmit}
+        >
+          Simpan
+        </Button>
       </div>
     </div>
   );

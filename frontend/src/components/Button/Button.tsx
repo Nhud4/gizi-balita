@@ -27,6 +27,7 @@ export const Button: React.FC<Props> = ({
         styles[color],
         className,
         leftIcon ? "gap-2" : "",
+        props.disabled ? "cursor-not-allowed !bg-[#9E9E9E]" : "cursor-pointer",
       ])}
       onClick={onClick}
     >

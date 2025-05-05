@@ -12,9 +12,12 @@ type DataList = {
   updated_at: string;
 };
 
-type DataListParams = TableParams & {
-  gizi: string;
-  gender: string;
+type DataListParams = {
+  page: number | string;
+  search?: string;
+  size: number | string;
+  gizi?: string;
+  gender?: string;
 };
 
 type DataPayload = {

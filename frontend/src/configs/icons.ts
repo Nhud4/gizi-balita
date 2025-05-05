@@ -12,6 +12,7 @@ import Folder from "../assets/icons/folder.svg?react";
 import GreenLogo from "../assets/icons/green-logo.svg?react";
 import Home from "../assets/icons/home.svg?react";
 import Power from "../assets/icons/power.svg?react";
+import Save from "../assets/icons/save.svg?react";
 import Search from "../assets/icons/search.svg?react";
 import Trash from "../assets/icons/trash.svg?react";
 import Upload from "../assets/icons/upload.svg?react";
@@ -36,6 +37,7 @@ const ICONS = {
   Arrow,
   Search,
   Trash,
+  Save,
 };
 
 export default ICONS;

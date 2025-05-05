@@ -25,6 +25,7 @@ const customStyles: StylesConfig = {
     minHeight: 46,
     borderRadius: "6px",
     borderColor: "#E5E5E5",
+    color: "#4a4a4a",
   }),
   indicatorSeparator: () => ({
     display: "none",
