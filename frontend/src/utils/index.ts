@@ -13,3 +13,14 @@ export const getYearList = (start: number, end: number): number[] => {
   }
   return years;
 };
+
+export const generateNoColumn = (
+  meta: Meta | undefined,
+  index: number,
+  size: number
+): number => {
+  if (!meta) return 1;
+  const page = meta?.page as number;
+  const no = page === 1 ? index + 1 : size * (page - 1) + index + 1;
+  return no;
+};

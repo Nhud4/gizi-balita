@@ -20,13 +20,13 @@ export const baseFetch = async (
   const user = getUserToken() as UserToken;
   const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
   const isFormData = body instanceof FormData;
-  headers.set("Content-type", "application/json");
-
+  if (!isFormData) {
+    headers.set("Content-Type", "application/json");
+  }
+  if (!user) headers.set("Authorization", `Basic ${basicCredentials}`);
   if (user) {
     const { token } = user;
     if (token) headers.set("Authorization", `Bearer ${token}`);
-  } else {
-    headers.set("Authorization", `Basic ${basicCredentials}`);
   }
 
   return fetch(url, {

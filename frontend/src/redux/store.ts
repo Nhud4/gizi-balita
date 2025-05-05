@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import auth from "./slice/auth";
+import data from "./slice/data";
+import report from "./slice/report";
 
 export const store = configureStore({
   reducer: {
     auth,
+    data,
+    report,
   },
 });
 

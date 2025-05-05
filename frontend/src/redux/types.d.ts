@@ -26,7 +26,7 @@ type QuerySliceParams<T, S> = {
 
 type MutationSliceParams<S, T> = {
   clearSlice?: () => void;
-  key: "add" | "edit" | "remove" | "login" | "register";
+  key: "add" | "edit" | "remove" | "login" | "register" | "upload";
   onError?: () => void;
   onSuccess?: (data: T) => void;
   slice: keyof S;

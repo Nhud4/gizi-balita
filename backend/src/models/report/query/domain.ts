@@ -59,10 +59,13 @@ class QueryDomain {
       };
     }
 
+    const normal = data[0]?.total || 0;
+    const anomaly = data[1]?.total || 0;
+
     const res = {
-      totalData: data[0].total + data[1].total,
-      totalNormal: data[0].total,
-      totalNotNormal: data[1].total,
+      totalData: normal + anomaly,
+      totalNormal: normal,
+      totalNotNormal: anomaly,
     };
 
     return wrapper.data(res);
