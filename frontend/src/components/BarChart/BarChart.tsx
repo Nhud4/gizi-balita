@@ -109,7 +109,18 @@ export const BarChart: React.FC<Props> = React.memo(
             {...props}
             className={clsx([styles.chart, props.className as string])}
           >
-            <Bar data={chartData} options={{ ...chartOptions, ...options }} />
+            <Bar
+              data={chartData}
+              options={{
+                ...chartOptions,
+                ...options,
+                layout: {
+                  padding: {
+                    top: legend ? 20 : 40,
+                  },
+                },
+              }}
+            />
           </div>
         </div>
       </div>

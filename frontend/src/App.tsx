@@ -1,4 +1,5 @@
 import "./app.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import React, { Suspense, useEffect } from "react";
 import { withErrorBoundary } from "react-error-boundary";

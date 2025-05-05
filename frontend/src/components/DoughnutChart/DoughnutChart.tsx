@@ -59,7 +59,6 @@ export const DoughnutChart: React.FC<Props> = ({
   title = "Doughnut Chart",
 }): React.ReactElement => {
   const total = data.datasets[0].data.reduce((a, b) => a + b);
-  console.log(total);
   return (
     <div className="flex flex-col justify-between bg-white p-6 rounded-xl shadow-2xl h-full">
       <div className="flex justify-between items-start gap-4">
@@ -92,7 +91,7 @@ export const DoughnutChart: React.FC<Props> = ({
             </div>
 
             <p className="text-lg font-semibold pl-[1.3rem]">
-              {(item / total) * 100}%
+              {((item / total) * 100).toFixed(2)}%
             </p>
           </div>
         ))}

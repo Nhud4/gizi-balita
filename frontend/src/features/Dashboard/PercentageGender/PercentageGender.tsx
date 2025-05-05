@@ -4,26 +4,28 @@ import { useEffect, useState } from "react";
 import DoughnutChart from "../../../components/DoughnutChart";
 import DropdownInput from "../../../components/DropdownInput";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { fetchPercentageGizi } from "../../../redux/slice/report/action";
+import { fetchPercentageGender } from "../../../redux/slice/report/action";
 import { getYearList } from "../../../utils";
 import { labelsYears } from "../../../utils/chart";
 
 const thisYear = new Date().getFullYear();
 const thisMonth = new Date().getMonth();
 
-export const PercentageGizi = () => {
-  const { data: gizi } = useAppSelector((state) => state.report.percentageGizi);
+export const PercentageGender = () => {
+  const { data: gender } = useAppSelector(
+    (state) => state.report.percentageGender
+  );
   const dispatch = useAppDispatch();
   const [year, setYear] = useState(thisYear.toString());
   const [month, setMonth] = useState((thisMonth + 1).toString());
 
   const data: ChartData<"doughnut", number[], string> = {
-    labels: ["Gizi Normal", "Gizi Kurang"],
+    labels: ["Laki-laki", "Perempuan"],
     datasets: [
       {
         label: "# of Votes",
-        data: [gizi?.totalNormal || 0, gizi?.totalNotNormal || 0],
-        backgroundColor: ["#00C6A9", "#1E88E5"],
+        data: [gender?.totalNormal || 0, gender?.totalNotNormal || 0],
+        backgroundColor: ["#1E88E5", "#FFC107"],
         borderWidth: 4,
       },
     ],
@@ -45,13 +47,13 @@ export const PercentageGizi = () => {
   const selectMonth = monthOps.filter((item) => item.value === month);
 
   useEffect(() => {
-    dispatch(fetchPercentageGizi({ year, month }));
-  }, [year, month, dispatch]);
+    dispatch(fetchPercentageGender({ year, month }));
+  }, [dispatch, year, month]);
 
   return (
     <DoughnutChart
       data={data}
-      title="Persentase Gizi Balita"
+      title="Jenis Kelamin"
       actionComponent={
         <div className="flex items-center gap-1">
           <DropdownInput

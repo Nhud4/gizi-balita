@@ -22,6 +22,6 @@ type DoughnutChart = {
 };
 
 type ReportParams = {
-  years?: string;
+  year?: string;
   month?: string;
 };

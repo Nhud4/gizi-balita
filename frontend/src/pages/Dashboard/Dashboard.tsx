@@ -1,7 +1,9 @@
 import React, { JSX } from "react";
 
 import Layout from "../../components/Layout";
+import ChartAge from "../../features/Dashboard/ChartAge";
 import ChartGizi from "../../features/Dashboard/ChartGizi";
+import PercentageGender from "../../features/Dashboard/PercentageGender";
 import PercentageGizi from "../../features/Dashboard/PercentageGizi";
 import Summary from "../../features/Dashboard/Summary";
 
@@ -20,9 +22,9 @@ export const Dashboard: React.FC = (): JSX.Element => {
 
         <div className="grid grid-cols-3 gap-4">
           <div className="col-span-2">
-            <ChartGizi />
+            <ChartAge />
           </div>
-          <PercentageGizi />
+          <PercentageGender />
         </div>
       </section>
     </Layout>
