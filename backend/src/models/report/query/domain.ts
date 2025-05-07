@@ -43,7 +43,7 @@ class QueryDomain {
   async percentageGizi(payload: ReportParams) {
     const date = new Date();
     date.setFullYear(payload.year);
-    date.setMonth(payload.month);
+    date.setMonth(payload.month - 1);
 
     const startDate = startOfMonth(date);
     const endDate = endOfMonth(date);
@@ -74,7 +74,7 @@ class QueryDomain {
   async percentageGender(payload: ReportParams) {
     const date = new Date();
     date.setFullYear(payload.year);
-    date.setMonth(payload.month);
+    date.setMonth(payload.month - 1);
 
     const startDate = startOfMonth(date);
     const endDate = endOfMonth(date);
@@ -90,10 +90,13 @@ class QueryDomain {
       };
     }
 
+    const normal = data[0]?.total || 0;
+    const anomaly = data[1]?.total || 0;
+
     const res = {
-      totalData: data[0].total + data[1].total,
-      totalNormal: data[0].total,
-      totalNotNormal: data[1].total,
+      totalData: normal + anomaly,
+      totalNormal: normal,
+      totalNotNormal: anomaly,
     };
 
     return wrapper.data(res);
@@ -251,13 +254,15 @@ class QueryDomain {
     const resStatus0 = new Array(12).fill(0);
     for (let i = 0; i < status0.length; i++) {
       const el = status0[i];
-      resStatus0[i] = el.total;
+      const month = el.month - 1;
+      resStatus0[month] = el.total;
     }
 
     const resStatus1 = new Array(12).fill(0);
     for (let i = 0; i < status1.length; i++) {
       const el = status1[i];
-      resStatus1[i] = el.total;
+      const month = el.month - 1;
+      resStatus1[month] = el.total;
     }
 
     return wrapper.data({ resStatus0, resStatus1 });

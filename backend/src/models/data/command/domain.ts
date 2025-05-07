@@ -14,6 +14,7 @@ import {
   minimumFilter,
   maximumFilter,
   knnToddlers,
+  dataDenormalization,
 } from "../../../config/algo";
 
 class CommandDomain {
@@ -126,10 +127,10 @@ class CommandDomain {
       .slice(0, 1)[0];
     const smote = smoteToddlers(minority, 3, totalDistance, lastId);
 
-    const joinData = [...data, ...smote];
+    const joinData = [...data, ...smote] as ToddlersData[];
 
     // data normalization
-    const normalization = (joinData as ToddlersData[]).map((item) => ({
+    const normalization = joinData.map((item) => ({
       id: item.id,
       name: item.name,
       gender: item.gender.toString() === "L" ? 1 : 0,
@@ -142,6 +143,13 @@ class CommandDomain {
 
     // KNN
     const knn = knnToddlers(normalization, payload);
+    const neighbor = knn.neighbor.map((item) => ({
+      ...item,
+      age: dataDenormalization(item.age, min.age, max.age),
+      weight: dataDenormalization(item.weight, min.weight, max.weight),
+      height: dataDenormalization(item.height, min.height, max.height),
+      lila: dataDenormalization(item.lila, min.lila, max.lila),
+    }));
 
     // insert data
     const { err: insertErr } = await command.createData({
@@ -160,7 +168,7 @@ class CommandDomain {
       };
     }
 
-    return wrapper.data(knn);
+    return wrapper.data({ ...knn, neighbor });
   }
 
   async update(payload: UpdateData) {

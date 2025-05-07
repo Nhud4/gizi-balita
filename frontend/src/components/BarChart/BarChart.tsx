@@ -25,54 +25,14 @@ ChartJS.register(
   Legend
 );
 
-const chartOptions = {
-  ...baseChartOptions,
-  plugins: {
-    ...baseChartOptions.plugins,
-    tooltip: {
-      backgroundColor: "#fff",
-      displayColors: false,
-      caretPadding: 8,
-      yAlign: "bottom",
-      bodyAlign: "center",
-      bodyColor: "#1C627F",
-      titleAlign: "center",
-      titleColor: "#1C627F",
-      borderWidth: 1,
-      borderColor: "#D4D4D4",
-      callbacks: {
-        title: (item) => {
-          return item[0].dataset.label || "Pendapatan";
-        },
-        label: (item) => {
-          return [
-            item.formattedValue,
-            `${item.label} ${new Date().getFullYear()}`,
-          ];
-        },
-      },
-    },
-  },
-  scales: {
-    y: {
-      grid: {
-        borderDash: [15],
-      },
-    },
-    x: {
-      grid: {
-        display: false,
-      },
-    },
-  },
-} as ChartOptions<"bar">;
-
 type Props = HTMLProps<HTMLDivElement> & {
   actionComponent?: React.ReactElement;
   chartData: ChartData<"bar", number[], string>;
   legend?: boolean;
   options?: ChartOptions<"bar">;
   title?: string;
+  year?: string;
+  topTooltip?: boolean;
 };
 
 export const BarChart: React.FC<Props> = React.memo(
@@ -82,8 +42,56 @@ export const BarChart: React.FC<Props> = React.memo(
     options,
     title = "Bar Chart",
     legend,
+    year,
+    topTooltip,
     ...props
   }): React.ReactElement => {
+    const chartOptions = {
+      ...baseChartOptions,
+      plugins: {
+        ...baseChartOptions.plugins,
+        tooltip: {
+          backgroundColor: "#fff",
+          displayColors: false,
+          caretPadding: 8,
+          yAlign: "bottom",
+          bodyAlign: "center",
+          bodyColor: "#1C627F",
+          titleAlign: "center",
+          titleColor: "#1C627F",
+          borderWidth: 1,
+          borderColor: "#D4D4D4",
+          callbacks: {
+            title: (item) => {
+              return topTooltip
+                ? `${item[0].dataset.label} ${item[0].label}`
+                : item[0].dataset.label;
+            },
+            label: (item) => {
+              return [
+                item.formattedValue,
+                topTooltip
+                  ? `Tahun ${year || new Date().getFullYear()}`
+                  : `${item.label} ${year || new Date().getFullYear()}`,
+              ];
+            },
+          },
+        },
+      },
+      scales: {
+        y: {
+          grid: {
+            borderDash: [15],
+          },
+        },
+        x: {
+          grid: {
+            display: false,
+          },
+        },
+      },
+    } as ChartOptions<"bar">;
+
     return (
       <div className="bg-white p-6 rounded-xl shadow-2xl">
         <div className="flex justify-between items-center">

@@ -119,6 +119,14 @@ export function dataNormalization(data: number, min: number, max: number) {
   return (data - min) / (max - min);
 }
 
+export function dataDenormalization(
+  normalized: number,
+  min: number,
+  max: number
+): number {
+  return normalized * (max - min) + min;
+}
+
 export function minimumFilter(data: ToddlersData[]) {
   const age = (data as ToddlersData[])
     .map((item) => item.age)

@@ -39,8 +39,17 @@ export const fetchCreateData = createAsyncThunk(
   "data/crate",
   async (payload: DataPayload, { rejectWithValue }) => {
     try {
-      const response = await services.createData(payload);
-      return response;
+      const { data, ...res } = await services.createData(payload);
+      return {
+        ...res,
+        data: {
+          ...data,
+          neighbor: data.neighbor.map((item, index) => ({
+            ...item,
+            no: index + 1,
+          })),
+        },
+      };
     } catch (error) {
       throw rejectWithValue(error);
     }
@@ -61,7 +70,10 @@ export const fetchUploadData = createAsyncThunk(
 
 export const fetchUpdateData = createAsyncThunk(
   "data/update",
-  async (params: { id: string; payload: DataPayload }, { rejectWithValue }) => {
+  async (
+    params: { id: string; payload: UpdatePayload },
+    { rejectWithValue }
+  ) => {
     try {
       const { id, payload } = params;
       const response = await services.updateData(id, payload);

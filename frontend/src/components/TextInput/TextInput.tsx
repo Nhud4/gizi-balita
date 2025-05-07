@@ -11,6 +11,7 @@ type Props = {
   upperCase?: boolean;
   errMessage?: string;
   prefix?: string;
+  integer?: boolean;
 } & InputHTMLAttributes<HTMLInputElement> &
   InputHTMLAttributes<HTMLTextAreaElement>;
 
@@ -23,6 +24,7 @@ export const TextInput = ({
   upperCase,
   errMessage,
   prefix,
+  integer,
   ...props
 }: Props) => {
   function transFormValue<E>(event: React.ChangeEvent<E>) {
@@ -33,7 +35,9 @@ export const TextInput = ({
         ...event,
         target: {
           ...event.target,
-          value: value.replace(/\D/g, ""),
+          value: integer
+            ? value.replace(/[^0-9]/g, "")
+            : value.replace(/[^\d.]/g, ""),
         },
       };
     }

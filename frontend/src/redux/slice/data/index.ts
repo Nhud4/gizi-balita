@@ -13,7 +13,7 @@ import {
 interface DataState {
   list: SliceState<DataList[]>;
   detail: SliceState<DataList | null>;
-  create: SliceState<DataResponse | null>;
+  add: SliceState<DataResponse | null>;
   upload: SliceState<unknown>;
   edit: SliceState<unknown>;
   remove: SliceState<unknown>;
@@ -22,7 +22,7 @@ interface DataState {
 const initialState: DataState = {
   list: { ...basicState, meta },
   detail: { ...basicState, data: null },
-  create: { ...basicState, data: null },
+  add: { ...basicState, data: null },
   upload: basicState,
   edit: basicState,
   remove: basicState,
@@ -39,7 +39,7 @@ export const dataSlice = createSlice({
   extraReducers: (builder) => {
     thunkBuilder({ builder, key: "list", thunk: fetchListData });
     thunkBuilder({ builder, key: "detail", thunk: fetchDetailData });
-    thunkBuilder({ builder, key: "create", thunk: fetchCreateData });
+    thunkBuilder({ builder, key: "add", thunk: fetchCreateData });
     thunkBuilder({ builder, key: "upload", thunk: fetchUploadData });
     thunkBuilder({ builder, key: "edit", thunk: fetchUpdateData });
     thunkBuilder({ builder, key: "remove", thunk: fetchRemoveData });

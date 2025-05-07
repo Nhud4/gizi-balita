@@ -65,12 +65,12 @@ class Query {
     try {
       const result = await db(tableName)
         .select(
-          db.raw("DATE_FORMAT(created_at, '%Y-%m') as month"),
+          db.raw("MONTH(created_at) as month"),
           db.raw("COUNT(*) as total")
         )
         .where("status", status)
         .andWhereBetween("created_at", [start, end])
-        .groupByRaw("DATE_FORMAT(created_at, '%Y-%m')")
+        .groupByRaw("MONTH(created_at)")
         .orderBy("month", "asc");
 
       return wrapper.data(result);

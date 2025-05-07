@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Button from "../Button";
+import Spinner from "../Spinner";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -19,6 +20,8 @@ export const ConfirmationModal: React.FC<Props> = ({
   confirmationType,
   onConfirm,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   if (open) {
     return (
       <div className={styles.container}>
@@ -29,16 +32,28 @@ export const ConfirmationModal: React.FC<Props> = ({
               <Button className={styles.cancel} onClick={onClose}>
                 Batal
               </Button>
-              <Button className={styles.confirm} onClick={onConfirm}>
-                Konfirmasi
+              <Button
+                className={styles.confirm}
+                onClick={() => {
+                  setLoading(true);
+                  if (onConfirm) onConfirm();
+                }}
+              >
+                {loading ? <Spinner /> : "Konfirmasi"}
               </Button>
             </div>
           ) : null}
 
           {confirmationType === "delete" ? (
             <div className="flex justify-center items-center gap-4">
-              <Button className={styles.cancel} onClick={onConfirm}>
-                Ya, Hapus
+              <Button
+                className={styles.cancel}
+                onClick={() => {
+                  setLoading(true);
+                  if (onConfirm) onConfirm();
+                }}
+              >
+                {loading ? <Spinner type="secondary" /> : "Ya, Hapus"}
               </Button>
               <Button className={styles.confirm} onClick={onClose}>
                 Batal

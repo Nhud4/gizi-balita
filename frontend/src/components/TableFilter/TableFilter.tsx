@@ -43,9 +43,9 @@ export const TableFilter: React.FC<Props> = ({
         type="button"
       >
         {open ? (
-          <ICONS.Close height={24} width={24} style={{ fill: "#E5F0F4" }} />
+          <ICONS.Close height={24} width={24} style={{ color: "#009276" }} />
         ) : (
-          <ICONS.Filter style={{ color: "#009276" }} height={24} width={24} />
+          <ICONS.Filter height={24} width={24} style={{ color: "#009276" }} />
         )}
       </button>
       <div

@@ -5,13 +5,37 @@ import Spinner from "../../../components/Spinner";
 import ICONS from "../../../configs/icons";
 import IMAGES from "../../../configs/images";
 import { ModalContext } from "../../../contexts/ModalContext";
+import { useAppDispatch, useMutationSlice } from "../../../redux/hooks";
+import { clearData } from "../../../redux/slice/data";
+import { fetchUploadData } from "../../../redux/slice/data/action";
 
-export const UploadData: React.FC = () => {
+type Props = {
+  onSuccess: () => void;
+};
+
+export const UploadData: React.FC<Props> = ({ onSuccess }) => {
   const ref = useRef<HTMLInputElement>(null);
-  const [, setDoc] = useState<File | null>(null);
+  const [doc, setDoc] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
-  const [loadSubmit, setLoadSubmit] = useState(false);
   const { onClose } = useContext(ModalContext);
+  const dispatch = useAppDispatch();
+
+  const formData = new FormData();
+  const onSubmit = () => {
+    if (doc) {
+      formData.append("file", doc);
+      dispatch(fetchUploadData(formData as unknown as UploadPayload));
+    }
+  };
+
+  const { loading } = useMutationSlice({
+    key: "upload",
+    slice: "data",
+    clearSlice: () => dispatch(clearData("upload")),
+    onSuccess: () => {
+      onSuccess();
+    },
+  });
 
   return (
     <div className="relative flex flex-col gap-6">
@@ -31,7 +55,7 @@ export const UploadData: React.FC = () => {
       />
 
       <div className="flex flex-col justify-center items-center gap-4 border border-dashed rounded-lg border-[#38F4D1] p-4">
-        {loadSubmit ? (
+        {loading ? (
           <Spinner size="large" />
         ) : (
           <img src={IMAGES.CsvFile} alt="csv" width={100} />
@@ -62,8 +86,8 @@ export const UploadData: React.FC = () => {
         </Button>
         <Button
           leftIcon={<ICONS.Save width={20} height={20} />}
-          onClick={() => setLoadSubmit(true)}
-          disabled={loadSubmit}
+          onClick={onSubmit}
+          disabled={loading}
         >
           Simpan
         </Button>

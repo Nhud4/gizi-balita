@@ -19,7 +19,8 @@ class Query {
           }
         })
         .limit(params.size)
-        .offset((params.page - 1) * params.size);
+        .offset((params.page - 1) * params.size)
+        .orderBy("created_at", "desc");
 
       return wrapper.data(result);
     } catch (error) {

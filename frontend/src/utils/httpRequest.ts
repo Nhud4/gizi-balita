@@ -36,7 +36,7 @@ export const baseFetch = async (
     body: isFormData ? body : JSON.stringify(body),
   }).then((response) => {
     clearTimeout(timeoutId);
-    if ([401].includes(response.status)) {
+    if ([401, 403].includes(response.status)) {
       clearStorage();
       window.location.href = "/login";
     }

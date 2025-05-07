@@ -6,9 +6,14 @@ import ConfirmationContent from "../../../components/ConfirmationContent";
 import ICONS from "../../../configs/icons";
 import { ModalContext } from "../../../contexts/ModalContext";
 import FormData from "../../../form/FormData";
-import { useQuerySlice } from "../../../redux/hooks";
+import {
+  useAppDispatch,
+  useMutationSlice,
+  useQuerySlice,
+} from "../../../redux/hooks";
 import { clearData } from "../../../redux/slice/data";
 import { fetchListData } from "../../../redux/slice/data/action";
+import { fetchRemoveData } from "../../../redux/slice/data/action";
 import { FILTER_FIELDS } from "../../../utils/constant";
 import UploadData from "../UploadData";
 import { column } from "./column";
@@ -20,7 +25,8 @@ const initialParams: DataListParams = {
 
 export const ListData: React.FC = () => {
   const [params, setParams] = useState(initialParams);
-  const { setModal } = useContext(ModalContext);
+  const { setModal, onClose } = useContext(ModalContext);
+  const dispatch = useAppDispatch();
 
   const { data, loading, meta } = useQuerySlice<DataList[], DataListParams>({
     key: "list",
@@ -30,10 +36,15 @@ export const ListData: React.FC = () => {
     initial: params,
   });
 
+  const onSuccess = () => {
+    setParams({ page: 1, size: 10 });
+    onClose();
+  };
+
   const onUpload = () => {
     setModal({
       open: true,
-      content: <UploadData />,
+      content: <UploadData onSuccess={onSuccess} />,
       title: "Unggah Data Balita",
     });
   };
@@ -41,18 +52,20 @@ export const ListData: React.FC = () => {
   const onAction = (type: "detail" | "edit", values: DataList) => {
     setModal({
       open: true,
-      content: <FormData formType={type} detail={values} />,
+      content: (
+        <FormData formType={type} detail={values} onSuccess={onSuccess} />
+      ),
       title: type === "detail" ? "Detail Data Balita" : "Ubah Data Balita",
     });
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onDelete = (_id: number) => {
+  const onDelete = (id: number) => {
     setModal({
       open: true,
       content: <ConfirmationContent confirmationType="delete" />,
       type: "confirmation",
       confirmationType: "delete",
+      onConfirm: () => dispatch(fetchRemoveData(`${id}`)),
     });
   };
 
@@ -73,6 +86,13 @@ export const ListData: React.FC = () => {
   const onChangeRowPerPage = (size: number) => {
     setParams({ ...params, size, page: 1 });
   };
+
+  useMutationSlice({
+    key: "remove",
+    slice: "data",
+    clearSlice: () => dispatch(clearData("remove")),
+    onSuccess: () => onSuccess(),
+  });
 
   return (
     <BaseTable

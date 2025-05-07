@@ -55,6 +55,7 @@ export const ChartGizi = () => {
       title="Grafik Gizi Balita"
       chartData={data}
       legend
+      year={year}
       actionComponent={
         <DropdownInput
           options={yearOps}

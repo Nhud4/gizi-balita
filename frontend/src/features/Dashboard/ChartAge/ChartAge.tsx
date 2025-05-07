@@ -19,7 +19,7 @@ export const ChartAge = () => {
     datasets: [
       {
         barPercentage: 0.5,
-        label: "Gisi Normal",
+        label: "Usia Balita",
         data: age,
         backgroundColor: "#1E88E5",
         borderRadius: 10,
@@ -44,6 +44,8 @@ export const ChartAge = () => {
   return (
     <BarChart
       title="Kelompok Usia Balita"
+      topTooltip
+      year={year}
       chartData={data}
       actionComponent={
         <DropdownInput

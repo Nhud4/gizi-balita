@@ -30,6 +30,16 @@ type DataPayload = {
   k: number;
 };
 
+type UpdatePayload = {
+  name: string;
+  gender: string;
+  age: number;
+  weight: string;
+  height: string;
+  lila: string;
+  status: string;
+};
+
 type PayloadResponse = {
   name: string;
   gender: string;

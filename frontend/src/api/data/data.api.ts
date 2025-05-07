@@ -32,7 +32,7 @@ export const uploadData = async (payload: UploadPayload) => {
   return data;
 };
 
-export const updateData = async (id: string, payload: DataPayload) => {
+export const updateData = async (id: string, payload: UpdatePayload) => {
   const data = await req.patch(`${endpoint.main}/update/${id}`, payload);
   return data;
 };
