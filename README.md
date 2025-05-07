@@ -2,13 +2,6 @@
 
 Aplikasi monitoring status gizi balita dengan arsitektur monorepo (frontend & backend terpisah).
 
-## 📁 Struktur Proyek
-
-gizi-balita/
-├── backend/ # Kode untuk backend (Node.js/Express, dll)
-├── frontend/ # Kode untuk frontend (React/Vite, dll)
-├── package.json # Script manajemen proyek gabungan
-
 ## 🚀 Fitur
 
 - Manajemen data gizi balita
@@ -18,21 +11,23 @@ gizi-balita/
 
 ## 🧑‍💻 Teknologi
 
-- Frontend: (React, Vite, Tailwind CSS, dll) _(isi sesuai yang kamu pakai)_
-- Backend: (Express.js, MySQL/MongoDB, dll) _(isi sesuai yang kamu pakai)_
+- Frontend: (React, Vite, Tailwind CSS, React Router Dom, Redux)
+- Backend: (Express.js, MySQL, Knex)
 - Dev Tools: Concurrently, npm
+- Node Version: 23.11.0
+- npm version: 10.9.2
 
 ## ⚙️ Cara Menjalankan
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/username/gizi-balita.git
+git clone https://github.com/Nhud4/gizi-balita.git
 cd gizi-balita
 
 # 2. Install dependencies
 npm run prepare
 
-## jika ada masalah saat install
+## jika ada masalah saat install dependencies
 npm run prepare --legacy-peer-deps
 
 # 3. Jalankan frontend & backend secara bersamaan
