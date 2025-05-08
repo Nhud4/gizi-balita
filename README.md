@@ -24,13 +24,13 @@ Aplikasi monitoring status gizi balita dengan arsitektur monorepo (frontend & ba
 git clone https://github.com/Nhud4/gizi-balita.git
 cd gizi-balita
 
-# 2. Install dependencies
-npm run prepare
+#2. install concurrently
+npm install --save-dev concurrently
 
-## jika ada masalah saat install dependencies
+# 3. Install dependencies
 npm run prepare --legacy-peer-deps
 
-# 3. Jalankan frontend & backend secara bersamaan
+# 4. Jalankan frontend & backend secara bersamaan
 npm run dev
 ```
 
