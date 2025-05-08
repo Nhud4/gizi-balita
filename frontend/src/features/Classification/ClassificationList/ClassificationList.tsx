@@ -17,6 +17,4 @@ export const ClassificationList: React.FC<Props> = ({ data }) => {
       />
     );
   }
-
-  return null;
 };

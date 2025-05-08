@@ -141,22 +141,26 @@ export const BaseTable: <T>(props: Props<T>) => React.ReactElement = ({
       <div className="flex justify-between items-center pb-4">
         <div className="flex items-center gap-4">
           <h1 className="text-xl font-semibold">{title}</h1>
-          <span className="text-sm px-3 py-[6px] rounded-lg bg-[#ACFAEC]">
-            {meta?.totalData || 0}
-          </span>
+          {meta ? (
+            <span className="text-sm px-3 py-[6px] rounded-lg bg-[#ACFAEC]">
+              {meta?.totalData || 0}
+            </span>
+          ) : null}
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 border px-4 h-[45px] rounded-lg border-[#E5E5E5]">
-            <ICONS.Search width={25} height={25} />
-            <input
-              type="text"
-              className="w-full outline-none text-sm"
-              placeholder="Cari disini..."
-              onChange={({ target: { value } }) => setSearch(value)}
-              value={search || ""}
-            />
-          </div>
+          {onSearch ? (
+            <div className="flex items-center gap-2 border px-4 h-[45px] rounded-lg border-[#E5E5E5]">
+              <ICONS.Search width={25} height={25} />
+              <input
+                type="text"
+                className="w-full outline-none text-sm"
+                placeholder="Cari disini..."
+                onChange={({ target: { value } }) => setSearch(value)}
+                value={search || ""}
+              />
+            </div>
+          ) : null}
 
           {withFilter ? (
             <TableFilter
