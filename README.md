@@ -30,7 +30,11 @@ npm install --save-dev concurrently
 # 3. Install dependencies
 npm run prepare --legacy-peer-deps
 
-# 4. Jalankan frontend & backend secara bersamaan
+#4. migration table
+cd ./backend
+npx knex migrate:latest
+
+# 5. Jalankan frontend & backend secara bersamaan
 npm run dev
 ```
 
