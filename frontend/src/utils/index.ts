@@ -24,3 +24,13 @@ export const generateNoColumn = (
   const no = page === 1 ? index + 1 : size * (page - 1) + index + 1;
   return no;
 };
+
+export const formatTotal = (number: number): string => {
+  const result = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  })
+    .format(number)
+    .replace(",00", "");
+  return result.replace("Rp", "");
+};

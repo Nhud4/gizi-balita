@@ -37,6 +37,15 @@ export const UploadData: React.FC<Props> = ({ onSuccess }) => {
     },
   });
 
+  const formatFileSize = (size: number) => {
+    if (size >= 1024 * 1024) {
+      return (size / (1024 * 1024)).toFixed(2) + " MB";
+    } else if (size >= 1024) {
+      return (size / 1024).toFixed(2) + " KB";
+    }
+    return size + " B";
+  };
+
   return (
     <div className="relative flex flex-col gap-6">
       <input
@@ -58,12 +67,23 @@ export const UploadData: React.FC<Props> = ({ onSuccess }) => {
         {loading ? (
           <Spinner size="large" />
         ) : (
-          <img src={IMAGES.CsvFile} alt="csv" width={100} />
+          <img
+            src={IMAGES.CsvFile}
+            alt="csv"
+            width={100}
+            className={doc ? "opacity-100" : "opacity-50"}
+          />
         )}
         <h1 className="text-xl font-semibold">{fileName || "Unggah Data"}</h1>
-        <p className="text-sm text-[#9E9E9E]">
-          Format yang didukung hanya .csv
-        </p>
+        {doc ? (
+          <p className="text-sm text-[#9E9E9E]">
+            Ukuran file {formatFileSize(doc.size)}
+          </p>
+        ) : (
+          <p className="text-sm text-[#9E9E9E]">
+            Format yang didukung hanya .csv
+          </p>
+        )}
         <Button
           leftIcon={
             <ICONS.Upload width={20} height={20} style={{ color: "009276" }} />
@@ -87,7 +107,7 @@ export const UploadData: React.FC<Props> = ({ onSuccess }) => {
         <Button
           leftIcon={<ICONS.Save width={20} height={20} />}
           onClick={onSubmit}
-          disabled={loading}
+          disabled={!doc || loading}
         >
           Simpan
         </Button>

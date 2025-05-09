@@ -8,6 +8,7 @@ import {
   fetchSummaryNormal,
   fetchSummaryTotal,
 } from "../../../redux/slice/report/action";
+import { formatTotal } from "../../../utils";
 
 type CardProps = {
   bg: string;
@@ -38,7 +39,7 @@ export const CardSummary = ({
         {loading ? (
           <Skeleton />
         ) : (
-          <p className="text-xl font-semibold">{value}</p>
+          <p className="text-xl font-semibold">{formatTotal(value)}</p>
         )}
       </div>
     </div>

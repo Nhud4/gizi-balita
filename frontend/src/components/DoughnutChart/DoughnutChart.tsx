@@ -91,7 +91,10 @@ export const DoughnutChart: React.FC<Props> = ({
             </div>
 
             <p className="text-lg font-semibold pl-[1.3rem]">
-              {((item / total) * 100).toFixed(2)}%
+              {isNaN((item / total) * 100)
+                ? 0
+                : ((item / total) * 100).toFixed(2)}
+              %
             </p>
           </div>
         ))}
