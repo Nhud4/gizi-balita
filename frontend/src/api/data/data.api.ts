@@ -41,3 +41,8 @@ export const removeData = async (id: string) => {
   const data = await req.remove(`${endpoint.main}/delete/${id}`);
   return data;
 };
+
+export const removeAllData = async () => {
+  const data = await req.remove(`${endpoint.main}/clear`);
+  return data;
+};

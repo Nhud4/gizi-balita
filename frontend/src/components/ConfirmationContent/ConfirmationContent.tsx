@@ -3,7 +3,7 @@ import React from "react";
 import IMAGES from "../../configs/images";
 
 type Props = {
-  confirmationType?: "delete" | "add" | "edit" | "logout";
+  confirmationType?: "delete" | "add" | "edit" | "logout" | "clear";
 };
 
 export const ConfirmationContent: React.FC<Props> = ({ confirmationType }) => {
@@ -15,6 +15,18 @@ export const ConfirmationContent: React.FC<Props> = ({ confirmationType }) => {
         <p className="text-sm">
           Apakah Anda yakin ingin menghapus <br /> secara permanen pada data
           yang dipilih?
+        </p>
+      </div>
+    );
+  }
+
+  if (confirmationType === "clear") {
+    return (
+      <div className="flex flex-col items-center justify-center space-y-4 text-center">
+        <img src={IMAGES.Clean} alt="icon" />
+        <h1 className="font-semibold">Konfirmasi Penghapusan Semua Data</h1>
+        <p className="text-sm">
+          Apakah Anda yakin ingin menghapus <br /> secara permanen semua data?
         </p>
       </div>
     );

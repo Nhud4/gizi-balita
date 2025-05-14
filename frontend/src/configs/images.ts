@@ -1,4 +1,5 @@
 import Avatar from "../assets/images/Avatar.png";
+import Clean from "../assets/images/clean.png";
 import CsvFile from "../assets/images/csv-file.png";
 import Power from "../assets/images/power-on.png";
 import Waiting from "../assets/images/process.png";
@@ -16,6 +17,7 @@ const IMAGES = {
   Error,
   Empty,
   Power,
+  Clean,
 };
 
 export default IMAGES;

@@ -41,5 +41,6 @@ router.delete(
   commandModel.removeSchema,
   commandHandler.remove
 );
+router.delete("/data/clear", verifyToken, commandHandler.removeAll);
 
 export default router;

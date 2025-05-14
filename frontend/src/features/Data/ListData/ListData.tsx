@@ -13,7 +13,10 @@ import {
 } from "../../../redux/hooks";
 import { clearData } from "../../../redux/slice/data";
 import { fetchListData } from "../../../redux/slice/data/action";
-import { fetchRemoveData } from "../../../redux/slice/data/action";
+import {
+  fetchCleanData,
+  fetchRemoveData,
+} from "../../../redux/slice/data/action";
 import { FILTER_FIELDS } from "../../../utils/constant";
 import UploadData from "../UploadData";
 import { column } from "./column";
@@ -87,6 +90,16 @@ export const ListData: React.FC = () => {
     setParams({ ...params, size, page: 1 });
   };
 
+  const onClear = () => {
+    setModal({
+      open: true,
+      content: <ConfirmationContent confirmationType="clear" />,
+      type: "confirmation",
+      confirmationType: "delete",
+      onConfirm: () => dispatch(fetchCleanData()),
+    });
+  };
+
   useMutationSlice({
     key: "remove",
     slice: "data",
@@ -94,16 +107,31 @@ export const ListData: React.FC = () => {
     onSuccess: () => onSuccess(),
   });
 
+  useMutationSlice({
+    key: "clean",
+    slice: "data",
+    clearSlice: () => dispatch(clearData("clean")),
+    onSuccess: () => onSuccess(),
+  });
+
   return (
     <BaseTable
       actionComponent={
-        <Button
-          leftIcon={<ICONS.Upload width={20} height={20} />}
-          className="!text-sm !min-h-[45px]"
-          onClick={onUpload}
-        >
-          Unggah Data
-        </Button>
+        <div className="flex gap-4">
+          <Button
+            leftIcon={<ICONS.Upload width={20} height={20} />}
+            className="!text-sm !min-h-[45px]"
+            onClick={onUpload}
+          >
+            Unggah Data
+          </Button>
+          <Button
+            className="!text-sm !min-h-[45px] !bg-white border !border-[#D62A24] !text-[#D62A24]"
+            onClick={onClear}
+          >
+            <ICONS.Trash width={20} height={20} style={{ fill: "#D62A24" }} />
+          </Button>
+        </div>
       }
       columns={column({
         loading,

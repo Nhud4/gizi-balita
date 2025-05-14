@@ -72,6 +72,7 @@ export const useMutationSlice = <T>({
     login: "Anda berhasil login, tunggu beberapa saat untuk masuk ke beranda",
     register: "Pendaftaran berhasil, silahkan masuk dengan akun anda",
     upload: "Data berhasil diunggah",
+    clean: "Berhasil menghapus semua data",
   };
 
   useEffect(() => {

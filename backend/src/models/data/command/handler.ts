@@ -61,9 +61,24 @@ const remove = async (req: Request, res: Response) => {
   });
 };
 
+const removeAll = async (req: Request, res: Response) => {
+  const { data, err } = await domain.deleteAll();
+  if (err) {
+    return wrapper.responseError(res, err as HttpError);
+  }
+
+  return wrapper.response(res, 201, {
+    ...baseResponse,
+    code: 201,
+    message: "Data remove successfully",
+    data,
+  });
+};
+
 export default {
   uploadData,
   create,
   update,
   remove,
+  removeAll,
 };

@@ -95,3 +95,15 @@ export const fetchRemoveData = createAsyncThunk(
     }
   }
 );
+
+export const fetchCleanData = createAsyncThunk(
+  "data/clean",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await services.removeAllData();
+      return response;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  }
+);

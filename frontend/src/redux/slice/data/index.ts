@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { basicState, clearReducer, meta, thunkBuilder } from "../../utils";
 import {
+  fetchCleanData,
   fetchCreateData,
   fetchDetailData,
   fetchListData,
@@ -17,6 +18,7 @@ interface DataState {
   upload: SliceState<unknown>;
   edit: SliceState<unknown>;
   remove: SliceState<unknown>;
+  clean: SliceState<unknown>;
 }
 
 const initialState: DataState = {
@@ -26,6 +28,7 @@ const initialState: DataState = {
   upload: basicState,
   edit: basicState,
   remove: basicState,
+  clean: basicState,
 };
 
 export const dataSlice = createSlice({
@@ -43,6 +46,7 @@ export const dataSlice = createSlice({
     thunkBuilder({ builder, key: "upload", thunk: fetchUploadData });
     thunkBuilder({ builder, key: "edit", thunk: fetchUpdateData });
     thunkBuilder({ builder, key: "remove", thunk: fetchRemoveData });
+    thunkBuilder({ builder, key: "clean", thunk: fetchCleanData });
   },
 });
 

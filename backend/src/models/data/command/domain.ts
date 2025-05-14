@@ -224,6 +224,18 @@ class CommandDomain {
 
     return wrapper.data(remove);
   }
+
+  async deleteAll() {
+    const { data, err } = await command.removeAllData();
+    if (err) {
+      return {
+        err: new InternalServerError(err as string),
+        data: null,
+      };
+    }
+
+    return wrapper.data(data);
+  }
 }
 
 export default new CommandDomain();
