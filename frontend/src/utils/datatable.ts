@@ -26,6 +26,7 @@ export const tableStyles = (resetSort?: boolean): TableStyles => ({
       paddingLeft: 10, // 15
       paddingRight: 10, // 15
       position: "relative",
+      minHeight: "400px",
     },
   },
   head: {
