@@ -5,12 +5,14 @@ import Logger from "../helpers/logger";
 import auth from "../models/auth/routes";
 import data from "../models/data/routes";
 import report from "../models/report/routes";
+import synthetic from "../models/synthetic/router";
 
 const router = express.Router();
 
 router.use("/api", auth);
 router.use("/api", data);
 router.use("/api", report);
+router.use("/api", synthetic);
 
 router.get("/", (req, res, next) => {
   Wrapper.response(res, 200, {

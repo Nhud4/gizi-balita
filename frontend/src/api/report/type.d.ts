@@ -25,3 +25,8 @@ type ReportParams = {
   year?: string;
   month?: string;
 };
+
+type TotalData = {
+  normal: number;
+  anomaly: number;
+};

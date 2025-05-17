@@ -16,6 +16,7 @@ import {
   knnToddlers,
   dataDenormalization,
 } from "../../../config/algo";
+import commandSynthetic from "../../synthetic/command/domain";
 
 class CommandDomain {
   async uploadData(file: Express.Multer.File | undefined) {
@@ -164,6 +165,24 @@ class CommandDomain {
     if (insertErr) {
       return {
         err: new InternalServerError(insertErr as string),
+        data: null,
+      };
+    }
+
+    // clean data synthetic
+    const { err: cleanSyntheticErr } = await commandSynthetic.clean();
+    if (cleanSyntheticErr) {
+      return {
+        err: new InternalServerError(cleanSyntheticErr as string),
+        data: null,
+      };
+    }
+
+    // insert data synthetic
+    const { err: syntheticErr } = await commandSynthetic.create(smote);
+    if (syntheticErr) {
+      return {
+        err: new InternalServerError(syntheticErr as string),
         data: null,
       };
     }

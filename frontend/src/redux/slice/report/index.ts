@@ -1,14 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { basicState, clearReducer, thunkBuilder } from "../../utils";
+import { basicState, clearReducer, meta, thunkBuilder } from "../../utils";
 import {
   fetchGrafikAge,
   fetchGrafikGizi,
+  fetchListSynthetic,
   fetchPercentageGender,
   fetchPercentageGizi,
   fetchSummaryAnomaly,
   fetchSummaryNormal,
   fetchSummaryTotal,
+  fetchTotalAllData,
+  fetchTotalData,
 } from "./action";
 
 interface ReportState {
@@ -19,6 +22,9 @@ interface ReportState {
   grafikAge: SliceState<number[] | []>;
   percentageGizi: SliceState<DoughnutChart | null>;
   percentageGender: SliceState<DoughnutChart | null>;
+  listSynthetic: SliceState<DataList[]>;
+  totalData: SliceState<TotalData | null>;
+  totalAllData: SliceState<TotalData | null>;
 }
 
 const initialState: ReportState = {
@@ -29,6 +35,9 @@ const initialState: ReportState = {
   grafikAge: { ...basicState, data: [] },
   percentageGender: { ...basicState, data: null },
   percentageGizi: { ...basicState, data: null },
+  listSynthetic: { ...basicState, meta },
+  totalData: { ...basicState, data: null },
+  totalAllData: { ...basicState, data: null },
 };
 
 export const reportSlice = createSlice({
@@ -58,6 +67,21 @@ export const reportSlice = createSlice({
       builder,
       key: "percentageGender",
       thunk: fetchPercentageGender,
+    });
+    thunkBuilder({
+      builder,
+      key: "listSynthetic",
+      thunk: fetchListSynthetic,
+    });
+    thunkBuilder({
+      builder,
+      key: "totalData",
+      thunk: fetchTotalData,
+    });
+    thunkBuilder({
+      builder,
+      key: "totalAllData",
+      thunk: fetchTotalAllData,
     });
   },
 });

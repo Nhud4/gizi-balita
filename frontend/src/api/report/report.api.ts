@@ -2,6 +2,7 @@ import * as req from "../../utils/httpRequest";
 
 const endpoint = {
   main: "/api/report",
+  synthetic: "/api/synthetic",
 };
 
 export const summaryTotal = async () => {
@@ -53,6 +54,28 @@ export const chartGender = async (params: ReportParams) => {
   const data = await req.get<ApiResponse<DoughnutChart>>(
     `${endpoint.main}/gender`,
     params
+  );
+  return data;
+};
+
+export const listSynthetic = async (params: TableParams) => {
+  const data = await req.get<ApiResponse<DataList[]>>(
+    `${endpoint.synthetic}/list`,
+    params
+  );
+  return data;
+};
+
+export const totalData = async () => {
+  const data = await req.get<ApiResponse<TotalData>>(
+    `${endpoint.synthetic}/total`
+  );
+  return data;
+};
+
+export const totalAllData = async () => {
+  const data = await req.get<ApiResponse<TotalData>>(
+    `${endpoint.synthetic}/all`
   );
   return data;
 };
